@@ -1,0 +1,89 @@
+/* ============================================
+   Rucika TechSheet — Design Tokens
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Background — Navy Rucika */
+  --bg-primary: #0B1929;
+  --bg-secondary: #132F4C;
+  --bg-tertiary: #1A3A5C;
+  --bg-elevated: #1E4470;
+  --bg-glass: rgba(19, 47, 76, 0.7);
+  --bg-overlay: rgba(11, 25, 41, 0.85);
+
+  /* Rucika Brand Colors */
+  --rucika-blue: #1F3E7C;
+  --rucika-blue-light: #2A54A3;
+  --rucika-green: #2E7D32;
+  --rucika-green-light: #43A047;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #2E7D32, #1F3E7C);
+  --gradient-cta: linear-gradient(135deg, #43A047, #1565C0);
+  --gradient-card-1: linear-gradient(135deg, #1F3E7C, #2E7D32);
+  --gradient-card-2: linear-gradient(135deg, #1565C0, #0D47A1);
+  --gradient-card-3: linear-gradient(135deg, #2E7D32, #1B5E20);
+  --gradient-card-4: linear-gradient(135deg, #0D47A1, #1F3E7C);
+
+  /* PN Pressure Rating Colors */
+  --pn10-blue: #1565C0;
+  --pn16-yellow: #F9A825;
+  --pn20-red: #C62828;
+
+  /* Status Colors */
+  --status-published: #43A047;
+  --status-draft: #F9A825;
+  --status-error: #C62828;
+
+  /* Text */
+  --text-primary: #E8EDF2;
+  --text-secondary: #8FAABE;
+  --text-muted: #5C7A8F;
+  --text-inverse: #0B1929;
+
+  /* Borders & Shadows */
+  --border-subtle: rgba(31, 62, 124, 0.25);
+  --border-focus: rgba(31, 62, 124, 0.6);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 20px rgba(31, 62, 124, 0.2);
+  --shadow-glow-green: 0 0 20px rgba(46, 125, 50, 0.2);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 100px;
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-size-xs: 0.6875rem;
+  --font-size-sm: 0.8125rem;
+  --font-size-base: 0.9375rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.375rem;
+  --font-size-2xl: 1.75rem;
+  --font-size-3xl: 2.25rem;
+
+  /* Transitions */
+  --transition-fast: 100ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* Layout */
+  --sidebar-width: 260px;
+  --header-height: 64px;
+}
