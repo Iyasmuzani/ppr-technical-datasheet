@@ -55,8 +55,8 @@ const Storage = {
     if (!saved) return defaults;
     // Migrate old single 'address' field to address1/address2
     if (saved.address && !saved.address1) {
-      saved.address1 = saved.address;
-      saved.address2 = '';
+      saved.address1 = saved.address1;
+      saved.address2 = saved.address2;
       delete saved.address;
       this.set('profile', saved);
     }
