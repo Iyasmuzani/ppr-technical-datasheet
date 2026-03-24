@@ -43,36 +43,13 @@ const Storage = {
 
   // Company profile
   getProfile() {
-    const defaults = {
+    return this.get('profile') || {
       companyName: 'PT. Wahana Duta Jaya Rucika',
-      address1: 'Alia Building, 7th Floor, Jl. Ridwan Rais 10-18 (Gambir)',
-      address2: 'Jakarta 10110, Indonesia',
+      address: 'Alia Building, 7th Floor, Jl.Ridwan Rais 10 – 18(Gambir) Jakarta 10110, Indonesia',
       phone: '(021) 386 7717',
       email: 'info@rucika.co.id',
       website: 'www.rucika.co.id'
     };
-    const saved = this.get('profile');
-    if (!saved) return defaults;
-    // Migrate old single 'address' field to address1/address2
-    if (saved.address && !saved.address1) {
-      // Split the old address: everything before "Jakarta" goes to line 1, the rest to line 2
-      const fullAddr = saved.address;
-      const splitIdx = fullAddr.indexOf('Jakarta');
-      if (splitIdx > 0) {
-        saved.address1 = fullAddr.substring(0, splitIdx).trim().replace(/,\s*$/, '');
-        saved.address2 = fullAddr.substring(splitIdx).trim();
-      } else {
-        saved.address1 = fullAddr;
-        saved.address2 = '';
-      }
-      delete saved.address;
-      this.set('profile', saved);
-    }
-    // Filter out undefined/null values so defaults fill in missing fields
-    const cleaned = Object.fromEntries(
-      Object.entries(saved).filter(([, v]) => v !== undefined && v !== null && v !== '')
-    );
-    return { ...defaults, ...cleaned };
   },
 
   saveProfile(profile) {
