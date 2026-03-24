@@ -45,7 +45,7 @@ const Storage = {
   getProfile() {
     return this.get('profile') || {
       companyName: 'PT. Wahana Duta Jaya Rucika',
-      address: 'Alia Building, 7th Floor, 
+      address: 'Alia Building, 7th Floor,',
       'Jl.Ridwan Rais 10 – 18(Gambir) Jakarta 10110, Indonesia',
       phone: '(021) 386 7717',
       email: 'info@rucika.co.id',
