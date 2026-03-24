@@ -55,12 +55,24 @@ const Storage = {
     if (!saved) return defaults;
     // Migrate old single 'address' field to address1/address2
     if (saved.address && !saved.address1) {
-      saved.address1 = saved.address1;
-      saved.address2 = saved.address2;
+      // Split the old address: everything before "Jakarta" goes to line 1, the rest to line 2
+      const fullAddr = saved.address;
+      const splitIdx = fullAddr.indexOf('Jakarta');
+      if (splitIdx > 0) {
+        saved.address1 = fullAddr.substring(0, splitIdx).trim().replace(/,\s*$/, '');
+        saved.address2 = fullAddr.substring(splitIdx).trim();
+      } else {
+        saved.address1 = fullAddr;
+        saved.address2 = '';
+      }
       delete saved.address;
       this.set('profile', saved);
     }
-    return { ...defaults, ...saved };
+    // Filter out undefined/null values so defaults fill in missing fields
+    const cleaned = Object.fromEntries(
+      Object.entries(saved).filter(([, v]) => v !== undefined && v !== null && v !== '')
+    );
+    return { ...defaults, ...cleaned };
   },
 
   saveProfile(profile) {
