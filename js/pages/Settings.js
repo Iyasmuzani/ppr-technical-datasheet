@@ -50,8 +50,12 @@ export default function Settings() {
             <input type="text" class="form-input" id="s-company" value="${profile.companyName}">
           </div>
           <div class="form-group">
-            <label class="form-label">Address</label>
-            <textarea class="form-textarea" id="s-address" rows="2">${profile.address}</textarea>
+            <label class="form-label">Address Line 1</label>
+            <input type="text" class="form-input" id="s-address1" value="${profile.address1}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Address Line 2</label>
+            <input type="text" class="form-input" id="s-address2" value="${profile.address2}">
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-md);">
             <div class="form-group">
@@ -75,7 +79,8 @@ export default function Settings() {
     el.querySelector('#btn-save-profile')?.addEventListener('click', () => {
       const updated = {
         companyName: el.querySelector('#s-company').value,
-        address: el.querySelector('#s-address').value,
+        address1: el.querySelector('#s-address1').value,
+        address2: el.querySelector('#s-address2').value,
         phone: el.querySelector('#s-phone').value,
         email: el.querySelector('#s-email').value,
         website: el.querySelector('#s-website').value
