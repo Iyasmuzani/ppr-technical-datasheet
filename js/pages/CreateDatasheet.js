@@ -340,7 +340,7 @@ export default function CreateDatasheet() {
             ${Object.values(PRODUCTS.certifications).map((c, i) => `
               <tr${i % 2 === 1 ? ' style="background:#f8fafc;"' : ''}>
                 <td style="padding:6px 12px; font-size:0.8rem; color:#666; width:200px; font-weight:600;">${c.label}</td>
-                <td style="padding:6px 12px; font-size:0.8rem;">✅ ${c.value}</td>
+                <td style="padding:6px 12px; font-size:0.8rem;">${c.value}</td>
               </tr>
             `).join('')}
           </table>
@@ -560,7 +560,7 @@ export default function CreateDatasheet() {
               widths: ['*', '*'],
               body: [
                 [{ text: 'Certification', style: 'tableHeader' }, { text: 'Status', style: 'tableHeader' }],
-                ...Object.values(PRODUCTS.certifications).map(c => [{ text: c.label, bold: true }, '✅ ' + c.value])
+                ...Object.values(PRODUCTS.certifications).map(c => [{ text: c.label, bold: true }, c.value])
               ]
             },
             layout: {

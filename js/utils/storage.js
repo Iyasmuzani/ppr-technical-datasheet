@@ -44,7 +44,7 @@ const Storage = {
   // Company profile
   getProfile() {
     return this.get('profile') || {
-      companyName: 'PT. Wavin Rucika Indonesia',
+      companyName: 'PT. Wahana Duta Jaya Rucika',
       address: 'Jl. Raya Driyorejo KM 25, Gresik, Jawa Timur',
       phone: '+62 31 7507000',
       email: 'info@rucika.co.id',
