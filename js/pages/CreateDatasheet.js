@@ -257,8 +257,8 @@ export default function CreateDatasheet() {
             <img src="assets/logo-rucika.png" alt="Rucika" style="height:36px; width:auto;">
             <div class="pdf-preview__company">
               <strong>${profile.companyName}</strong><br>
-              ${profile.address1}<br>
-              ${profile.address2}<br>
+              ${profile.address1 ? profile.address1 + '<br>' : ''}
+              ${profile.address2 ? profile.address2 + '<br>' : ''}
               ${profile.phone} | ${profile.email}
             </div>
           </div>
@@ -442,8 +442,8 @@ export default function CreateDatasheet() {
             {
               text: [
                 { text: profile.companyName + '\n', bold: true, fontSize: 9 },
-                { text: profile.address1 + '\n', fontSize: 8 },
-                { text: profile.address2 + '\n', fontSize: 8 },
+                ...(profile.address1 ? [{ text: profile.address1 + '\n', fontSize: 8 }] : []),
+                ...(profile.address2 ? [{ text: profile.address2 + '\n', fontSize: 8 }] : []),
                 { text: profile.phone + ' | ' + profile.email, fontSize: 8 }
               ],
               alignment: 'right'

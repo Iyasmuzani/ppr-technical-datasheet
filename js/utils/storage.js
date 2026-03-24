@@ -41,15 +41,27 @@ const Storage = {
     this.set('datasheets', all);
   },
 
-  // Company profile
   getProfile() {
-    return this.get('profile') || {
-      companyName: 'PT. Wahana Duta Jaya Rucika',
-      address: 'Alia Building, 7th Floor, Jl. Ridwan Rais 10-18 (Gambir) Jakarta 10110, Indonesia',
-      phone: '(021) 386 7717',
-      email: 'info@rucika.co.id',
-      website: 'www.rucika.co.id'
-    };
+    let profile = this.get('profile');
+    if (!profile) {
+      profile = {
+        companyName: 'PT. Wahana Duta Jaya Rucika',
+        address1: 'Alia Building, 7th Floor',
+        address2: 'Jl. Ridwan Rais 10-18 (Gambir) Jakarta 10110, Indonesia',
+        phone: '(021) 386 7717',
+        email: 'info@rucika.co.id',
+        website: 'www.rucika.co.id'
+      };
+    } else {
+      // Migrate old format to new format
+      if (profile.address && !profile.address1 && !profile.address2) {
+        profile.address1 = profile.address;
+        profile.address2 = '';
+      }
+      profile.address1 = profile.address1 || '';
+      profile.address2 = profile.address2 || '';
+    }
+    return profile;
   },
 
   saveProfile(profile) {
