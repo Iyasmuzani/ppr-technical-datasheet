@@ -43,7 +43,7 @@ const Storage = {
 
   // Company profile
   getProfile() {
-    return this.get('profile') || {
+    const defaults = {
       companyName: 'PT. Wahana Duta Jaya Rucika',
       address1: 'Alia Building, 7th Floor, Jl. Ridwan Rais 10-18 (Gambir)',
       address2: 'Jakarta 10110, Indonesia',
@@ -51,6 +51,16 @@ const Storage = {
       email: 'info@rucika.co.id',
       website: 'www.rucika.co.id'
     };
+    const saved = this.get('profile');
+    if (!saved) return defaults;
+    // Migrate old single 'address' field to address1/address2
+    if (saved.address && !saved.address1) {
+      saved.address1 = saved.address;
+      saved.address2 = '';
+      delete saved.address;
+      this.set('profile', saved);
+    }
+    return { ...defaults, ...saved };
   },
 
   saveProfile(profile) {
