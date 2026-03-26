@@ -58,6 +58,7 @@ const PRODUCTS = {
       maxTemp: MATERIAL_PROPERTIES.maxOperatingTemp,
       sizeRange: '20 - 160 mm',
       color: 'Green with Blue Line',
+      image: './assets/products/pn10.jpg',
       sizes: [
         { dn: 20, od: 20, wallThickness: 2.3, weightPerM: 0.13, pipeLength: 4 },
         { dn: 25, od: 25, wallThickness: 2.3, weightPerM: 0.17, pipeLength: 4 },
@@ -88,6 +89,7 @@ const PRODUCTS = {
       maxTemp: MATERIAL_PROPERTIES.maxOperatingTemp,
       sizeRange: '20 - 160 mm',
       color: 'Green with Yellow Line',
+      image: './assets/products/pn16.jpg',
       sizes: [
         { dn: 20, od: 20, wallThickness: 2.8, weightPerM: 0.15, pipeLength: 4 },
         { dn: 25, od: 25, wallThickness: 3.5, weightPerM: 0.24, pipeLength: 4 },
@@ -118,6 +120,7 @@ const PRODUCTS = {
       maxTemp: MATERIAL_PROPERTIES.maxOperatingTemp,
       sizeRange: '20 - 160 mm',
       color: 'Green with Red Line',
+      image: './assets/products/pn20.jpg',
       sizes: [
         { dn: 20, od: 20, wallThickness: 3.4, weightPerM: 0.18, pipeLength: 4 },
         { dn: 25, od: 25, wallThickness: 4.2, weightPerM: 0.28, pipeLength: 4 },

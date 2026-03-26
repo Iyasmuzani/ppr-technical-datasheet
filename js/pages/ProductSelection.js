@@ -74,7 +74,7 @@ export default function ProductSelection() {
               ${items.map(p => `
                 <div class="product-card card--interactive" data-product-id="${p.id}">
                   <div class="product-card__image">
-                    <span style="font-size:3rem;">🟢</span>
+                    ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-card__img">` : `<span style="font-size:3rem;">🟢</span>`}
                     <span class="badge badge--${p.pnClass} product-card__pn-badge">${p.pnRating}</span>
                   </div>
                   <div class="product-card__body">

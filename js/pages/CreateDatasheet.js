@@ -110,7 +110,7 @@ export default function CreateDatasheet() {
     return `
       <div class="product-card card--interactive ${selected ? 'selected' : ''}" data-product-id="${p.id}" style="cursor:pointer;">
         <div class="product-card__image">
-          <span style="font-size:2.5rem;">🟢</span>
+          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-card__img">` : `<span style="font-size:3rem;">🟢</span>`}
           <span class="badge badge--${p.pnClass} product-card__pn-badge">${p.pnRating}</span>
         </div>
         <div class="product-card__body">

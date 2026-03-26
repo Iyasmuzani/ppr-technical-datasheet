@@ -394,6 +394,13 @@
   position: relative;
 }
 
+.product-card__img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+
 .product-card__pn-badge {
   position: absolute;
   top: var(--space-md);
