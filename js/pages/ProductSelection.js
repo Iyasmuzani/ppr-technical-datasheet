@@ -1,5 +1,5 @@
 // Rucika TechSheet — Product Selection Page
-import PRODUCTS from '../data/products.js';
+import PRODUCTS from '../data/products.js?v=1';
 import { debounce } from '../utils/helpers.js';
 
 export default function ProductSelection() {

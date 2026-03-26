@@ -1,5 +1,5 @@
 // Rucika TechSheet — Create Datasheet Wizard (4-Step)
-import PRODUCTS from '../data/products.js';
+import PRODUCTS from '../data/products.js?v=1';
 import Storage from '../utils/storage.js';
 import Router from '../router.js';
 import { showToast, formatDate } from '../utils/helpers.js';

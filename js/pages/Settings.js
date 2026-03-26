@@ -1,6 +1,6 @@
 // Rucika TechSheet — Settings Page
 import Storage from '../utils/storage.js';
-import PRODUCTS from '../data/products.js';
+import PRODUCTS from '../data/products.js?v=1';
 import { showToast } from '../utils/helpers.js';
 
 export default function Settings() {
