@@ -294,21 +294,36 @@ export default function CreateDatasheet() {
           </table>
 
           <!-- Material Properties -->
-          ${PRODUCTS.materialProperties ? `
+          ${(() => {
+            const isHDPE = p.category === 'hdpe-pipe';
+            const matProps = isHDPE ? PRODUCTS.hdpeMaterialProperties : PRODUCTS.materialProperties;
+            if (!matProps) return '';
+            return `
           <h3 style="font-size:1rem; color:#1F3E7C; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
             Material Properties
           </h3>
           <table style="width:100%; margin-bottom:24px; border-collapse:collapse;">
-            <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666; width:200px;">Density</td><td style="padding:4px 12px; font-size:0.8rem;">${PRODUCTS.materialProperties.density}</td></tr>
-            <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Tensile Strength @ Yield</td><td style="padding:4px 12px; font-size:0.8rem;">${PRODUCTS.materialProperties.tensileStrength}</td></tr>
-            <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Elongation @ Break</td><td style="padding:4px 12px; font-size:0.8rem;">${PRODUCTS.materialProperties.elongationAtBreak}</td></tr>
-            <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Modulus of Elasticity</td><td style="padding:4px 12px; font-size:0.8rem;">${PRODUCTS.materialProperties.modulusOfElasticity}</td></tr>
-            <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Coeff. of Thermal Expansion</td><td style="padding:4px 12px; font-size:0.8rem;">${PRODUCTS.materialProperties.thermalExpansion}</td></tr>
-            <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Thermal Conductivity</td><td style="padding:4px 12px; font-size:0.8rem;">${PRODUCTS.materialProperties.thermalConductivity}</td></tr>
-            <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Max Operating Temperature</td><td style="padding:4px 12px; font-size:0.8rem;">${PRODUCTS.materialProperties.maxOperatingTemp}</td></tr>
-            <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Standards & Regulatory Codes</td><td style="padding:4px 12px; font-size:0.8rem; font-weight:600;">${PRODUCTS.materialProperties.standard}</td></tr>
+            <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666; width:200px;">Density</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.density}</td></tr>
+            ${isHDPE ? `
+            <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Melt Flow Rate (MFR)</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.meltFlowRate}</td></tr>
+            <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Oxidation Induction Time (OIT)</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.oxidationInductionTime}</td></tr>
+            ` : ''}
+            <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Tensile Strength @ Yield</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.tensileStrength}</td></tr>
+            <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Elongation @ Break</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.elongationAtBreak}</td></tr>
+            <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Modulus of Elasticity</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.modulusOfElasticity}</td></tr>
+            ${isHDPE ? `
+            <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Vicat Softening Point</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.vicatSofteningPoint}</td></tr>
+            ` : ''}
+            <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Coeff. of Thermal Expansion</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.thermalExpansion}</td></tr>
+            <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Thermal Conductivity</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.thermalConductivity}</td></tr>
+            ${isHDPE ? `
+            <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Brittleness Temperature</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.brittlenessTemperature}</td></tr>
+            ` : ''}
+            <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Max Operating Temperature</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.maxOperatingTemp}</td></tr>
+            <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Standards & Regulatory Codes</td><td style="padding:4px 12px; font-size:0.8rem; font-weight:600;">${matProps.standard}</td></tr>
           </table>
-          ` : ''}
+          `;
+          })()}
 
           <!-- Spec Table -->
           <h3 style="font-size:1rem; color:#1F3E7C; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
@@ -338,19 +353,24 @@ export default function CreateDatasheet() {
           </table>
 
           <!-- Certifications & Compliance -->
-          ${PRODUCTS.certifications ? `
+          ${(() => {
+            const isHDPE = p.category === 'hdpe-pipe';
+            const certs = isHDPE ? PRODUCTS.hdpeCertifications : PRODUCTS.certifications;
+            if (!certs) return '';
+            return `
           <h3 style="font-size:1rem; color:#1F3E7C; margin-top:24px; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
             Certifications & Compliance
           </h3>
           <table style="width:100%; margin-bottom:24px; border-collapse:collapse;">
-            ${Object.values(PRODUCTS.certifications).map((c, i) => `
+            ${Object.values(certs).map((c, i) => `
               <tr${i % 2 === 1 ? ' style="background:#f8fafc;"' : ''}>
                 <td style="padding:6px 12px; font-size:0.8rem; color:#666; width:200px; font-weight:600;">${c.label}</td>
                 <td style="padding:6px 12px; font-size:0.8rem;">${c.value}</td>
               </tr>
             `).join('')}
           </table>
-          ` : ''}
+          `;
+          })()}
 
           ${state.notes ? `
             <h3 style="font-size:1rem; color:#1F3E7C; margin-top:24px; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
@@ -496,34 +516,48 @@ export default function CreateDatasheet() {
         },
 
         // Material Properties
-        ...(PRODUCTS.materialProperties ? [
-          { text: 'Material Properties', style: 'sectionTitle', margin: [0, 0, 0, 10] },
-          {
-            table: {
-              headerRows: 1,
-              widths: ['*', '*'],
-              body: [
-                [{ text: 'Property', style: 'tableHeader' }, { text: 'Value', style: 'tableHeader' }],
-                ['Density', PRODUCTS.materialProperties.density],
-                ['Tensile Strength @ Yield', PRODUCTS.materialProperties.tensileStrength],
-                ['Elongation @ Break', PRODUCTS.materialProperties.elongationAtBreak],
-                ['Modulus of Elasticity', PRODUCTS.materialProperties.modulusOfElasticity],
-                ['Coeff. of Thermal Expansion', PRODUCTS.materialProperties.thermalExpansion],
-                ['Thermal Conductivity', PRODUCTS.materialProperties.thermalConductivity],
-                ['Max Operating Temperature', PRODUCTS.materialProperties.maxOperatingTemp],
-                ['Standards & Regulatory Codes', { text: PRODUCTS.materialProperties.standard, bold: true }]
-              ]
-            },
-            layout: {
-              hLineWidth: () => 0.5,
-              vLineWidth: () => 0.5,
-              hLineColor: () => '#e2e8f0',
-              vLineColor: () => '#e2e8f0',
-              fillColor: (row) => row === 0 ? '#1F3E7C' : (row % 2 === 0 ? '#f8fafc' : null)
-            },
-            margin: [0, 0, 0, 20]
-          }
-        ] : []),
+        ...(() => {
+          const isHDPE = p.category === 'hdpe-pipe';
+          const matProps = isHDPE ? PRODUCTS.hdpeMaterialProperties : PRODUCTS.materialProperties;
+          if (!matProps) return [];
+          const rows = [
+            ['Density', matProps.density],
+            ...(isHDPE ? [
+              ['Melt Flow Rate (MFR)', matProps.meltFlowRate],
+              ['Oxidation Induction Time (OIT)', matProps.oxidationInductionTime]
+            ] : []),
+            ['Tensile Strength @ Yield', matProps.tensileStrength],
+            ['Elongation @ Break', matProps.elongationAtBreak],
+            ['Modulus of Elasticity', matProps.modulusOfElasticity],
+            ...(isHDPE ? [['Vicat Softening Point', matProps.vicatSofteningPoint]] : []),
+            ['Coeff. of Thermal Expansion', matProps.thermalExpansion],
+            ['Thermal Conductivity', matProps.thermalConductivity],
+            ...(isHDPE ? [['Brittleness Temperature', matProps.brittlenessTemperature]] : []),
+            ['Max Operating Temperature', matProps.maxOperatingTemp],
+            ['Standards & Regulatory Codes', { text: matProps.standard, bold: true }]
+          ];
+          return [
+            { text: 'Material Properties', style: 'sectionTitle', margin: [0, 0, 0, 10] },
+            {
+              table: {
+                headerRows: 1,
+                widths: ['*', '*'],
+                body: [
+                  [{ text: 'Property', style: 'tableHeader' }, { text: 'Value', style: 'tableHeader' }],
+                  ...rows
+                ]
+              },
+              layout: {
+                hLineWidth: () => 0.5,
+                vLineWidth: () => 0.5,
+                hLineColor: () => '#e2e8f0',
+                vLineColor: () => '#e2e8f0',
+                fillColor: (row) => row === 0 ? '#1F3E7C' : (row % 2 === 0 ? '#f8fafc' : null)
+              },
+              margin: [0, 0, 0, 20]
+            }
+          ];
+        })(),
 
         // Spec Table
         { text: 'Dimensional Specifications', style: 'sectionTitle', margin: [0, 0, 0, 10] },
@@ -559,27 +593,32 @@ export default function CreateDatasheet() {
         },
 
         // Certifications & Compliance
-        ...(PRODUCTS.certifications ? [
-          { text: 'Certifications & Compliance', style: 'sectionTitle', margin: [0, 0, 0, 10] },
-          {
-            table: {
-              headerRows: 1,
-              widths: ['*', '*'],
-              body: [
-                [{ text: 'Certification', style: 'tableHeader' }, { text: 'Status', style: 'tableHeader' }],
-                ...Object.values(PRODUCTS.certifications).map(c => [{ text: c.label, bold: true }, c.value])
-              ]
-            },
-            layout: {
-              hLineWidth: () => 0.5,
-              vLineWidth: () => 0.5,
-              hLineColor: () => '#e2e8f0',
-              vLineColor: () => '#e2e8f0',
-              fillColor: (row) => row === 0 ? '#1F3E7C' : (row % 2 === 0 ? '#f8fafc' : null)
-            },
-            margin: [0, 0, 0, 20]
-          }
-        ] : []),
+        ...(() => {
+          const isHDPE = p.category === 'hdpe-pipe';
+          const certs = isHDPE ? PRODUCTS.hdpeCertifications : PRODUCTS.certifications;
+          if (!certs) return [];
+          return [
+            { text: 'Certifications & Compliance', style: 'sectionTitle', margin: [0, 0, 0, 10] },
+            {
+              table: {
+                headerRows: 1,
+                widths: ['*', '*'],
+                body: [
+                  [{ text: 'Certification', style: 'tableHeader' }, { text: 'Status', style: 'tableHeader' }],
+                  ...Object.values(certs).map(c => [{ text: c.label, bold: true }, c.value])
+                ]
+              },
+              layout: {
+                hLineWidth: () => 0.5,
+                vLineWidth: () => 0.5,
+                hLineColor: () => '#e2e8f0',
+                vLineColor: () => '#e2e8f0',
+                fillColor: (row) => row === 0 ? '#1F3E7C' : (row % 2 === 0 ? '#f8fafc' : null)
+              },
+              margin: [0, 0, 0, 20]
+            }
+          ];
+        })(),
 
         // Notes
         ...(state.notes ? [

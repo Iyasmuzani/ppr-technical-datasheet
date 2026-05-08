@@ -31,9 +31,51 @@ const CERTIFICATIONS = {
   }
 };
 
+// HDPE Pipe — Material Properties (PE100)
+const HDPE_MATERIAL_PROPERTIES = {
+  density: '0.959 g/cm³',
+  meltFlowRate: '0.2 – 1.3 g/10 min',
+  oxidationInductionTime: '84.01 minutes',
+  tensileStrength: '23 MPa',
+  elongationAtBreak: '>600%',
+  modulusOfElasticity: '1000 MPa',
+  vicatSofteningPoint: '124 °C',
+  thermalExpansion: '1.3 × 10⁻⁴ mm/m°C',
+  thermalConductivity: '0.4 W/m°C',
+  brittlenessTemperature: '<-100 °C',
+  maxOperatingTemp: '40 °C',
+  standard: 'SNI 4829:2015'
+};
+
+// HDPE Pipe — Certifications & Compliance
+const HDPE_CERTIFICATIONS = {
+  localContent: {
+    label: 'Local Content (TKDN)',
+    value: 'Certified — 55.03% local content'
+  },
+  sniCertificate: {
+    label: 'SNI Certificate',
+    value: 'SNI 4829.2:2015 — Certified for PE piping systems'
+  },
+  permenkes: {
+    label: 'Drinking Water Compliance',
+    value: 'Compliant — Permenkes No. 2 Tahun 2023'
+  },
+  greenLabel: {
+    label: 'Green Label',
+    value: 'Certified — Level Gold'
+  },
+  antifungi: {
+    label: 'Antifungi Certificate',
+    value: 'Certified — ASTM G21 standard'
+  }
+};
+
 const PRODUCTS = {
   materialProperties: MATERIAL_PROPERTIES,
   certifications: CERTIFICATIONS,
+  hdpeMaterialProperties: HDPE_MATERIAL_PROPERTIES,
+  hdpeCertifications: HDPE_CERTIFICATIONS,
 
   categories: [
     { id: 'ppr-pipe', name: 'PPR Pipes', icon: '🟢', count: 3 },
