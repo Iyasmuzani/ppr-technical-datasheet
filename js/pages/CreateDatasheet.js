@@ -325,6 +325,60 @@ export default function CreateDatasheet() {
           `;
           })()}
 
+          ${(() => {
+            const isHDPE = p.category === 'hdpe-pipe';
+            const matProps = isHDPE ? PRODUCTS.hdpeMaterialProperties : null;
+            if (!isHDPE || !matProps || !matProps.pressureDerating) return '';
+            const dr = matProps.pressureDerating;
+            // SVG chart dimensions
+            const W = 480, H = 260, padL = 60, padR = 30, padT = 30, padB = 50;
+            const chartW = W - padL - padR, chartH = H - padT - padB;
+            const xMin = 20, xMax = 40, yMin = 0, yMax = 120;
+            const toX = (t) => padL + ((t - xMin) / (xMax - xMin)) * chartW;
+            const toY = (f) => padT + chartH - ((f - yMin) / (yMax - yMin)) * chartH;
+            const points = dr.map(d => `${toX(d.temp)},${toY(d.factor)}`).join(' ');
+            // Y-axis gridlines
+            const yTicks = [0, 20, 40, 60, 80, 100, 120];
+            const xTicks = [20, 25, 30, 35, 40];
+            return `
+          <h3 style="font-size:1rem; color:#1F3E7C; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
+            Pressure & Temperature Derating Curve
+          </h3>
+          <div style="text-align:center; margin-bottom:24px;">
+            <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="font-family:Inter,sans-serif; max-width:100%;">
+              <!-- Background -->
+              <rect x="${padL}" y="${padT}" width="${chartW}" height="${chartH}" fill="#f8fafc" rx="4"/>
+              <!-- Y gridlines & labels -->
+              ${yTicks.map(y => `
+                <line x1="${padL}" y1="${toY(y)}" x2="${padL + chartW}" y2="${toY(y)}" stroke="#e2e8f0" stroke-width="1"/>
+                <text x="${padL - 8}" y="${toY(y) + 4}" text-anchor="end" fill="#888" font-size="10">${y}</text>
+              `).join('')}
+              <!-- X gridlines & labels -->
+              ${xTicks.map(t => `
+                <line x1="${toX(t)}" y1="${padT}" x2="${toX(t)}" y2="${padT + chartH}" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="${toX(t)}" y="${padT + chartH + 18}" text-anchor="middle" fill="#888" font-size="10">${t}</text>
+              `).join('')}
+              <!-- Gradient line -->
+              <defs>
+                <linearGradient id="deratingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#2dd4bf"/>
+                  <stop offset="100%" stop-color="#14b8a6"/>
+                </linearGradient>
+              </defs>
+              <polyline points="${points}" fill="none" stroke="url(#deratingGrad)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+              <!-- Data points & labels -->
+              ${dr.map(d => `
+                <circle cx="${toX(d.temp)}" cy="${toY(d.factor)}" r="5" fill="#14b8a6" stroke="#fff" stroke-width="2"/>
+                <text x="${toX(d.temp)}" y="${toY(d.factor) - 12}" text-anchor="middle" fill="#1F3E7C" font-size="11" font-weight="600">${d.factor}</text>
+              `).join('')}
+              <!-- Axis labels -->
+              <text x="${padL + chartW / 2}" y="${H - 4}" text-anchor="middle" fill="#555" font-size="11">Temperatur Kerja (°C)</text>
+              <text x="14" y="${padT + chartH / 2}" text-anchor="middle" fill="#555" font-size="11" transform="rotate(-90, 14, ${padT + chartH / 2})">% Rating</text>
+            </svg>
+          </div>
+          `;
+          })()}
+
           <!-- Spec Table -->
           <h3 style="font-size:1rem; color:#1F3E7C; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">
             Dimensional Specifications
@@ -545,6 +599,41 @@ export default function CreateDatasheet() {
                 body: [
                   [{ text: 'Property', style: 'tableHeader' }, { text: 'Value', style: 'tableHeader' }],
                   ...rows
+                ]
+              },
+              layout: {
+                hLineWidth: () => 0.5,
+                vLineWidth: () => 0.5,
+                hLineColor: () => '#e2e8f0',
+                vLineColor: () => '#e2e8f0',
+                fillColor: (row) => row === 0 ? '#1F3E7C' : (row % 2 === 0 ? '#f8fafc' : null)
+              },
+              margin: [0, 0, 0, 20]
+            }
+          ];
+        })(),
+
+        // Pressure & Temperature Derating Curve (HDPE only)
+        ...(() => {
+          const isHDPE = p.category === 'hdpe-pipe';
+          const matProps = isHDPE ? PRODUCTS.hdpeMaterialProperties : null;
+          if (!isHDPE || !matProps || !matProps.pressureDerating) return [];
+          const dr = matProps.pressureDerating;
+          return [
+            { text: 'Pressure & Temperature Derating Curve', style: 'sectionTitle', margin: [0, 0, 0, 10] },
+            {
+              table: {
+                headerRows: 1,
+                widths: ['*', '*'],
+                body: [
+                  [
+                    { text: 'Operating Temperature (°C)', style: 'tableHeader' },
+                    { text: '% Pressure Rating Factor', style: 'tableHeader' }
+                  ],
+                  ...dr.map(d => [
+                    { text: d.temp.toString() + ' °C', bold: true },
+                    d.factor.toString() + '%'
+                  ])
                 ]
               },
               layout: {

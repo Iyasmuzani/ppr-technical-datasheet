@@ -44,7 +44,15 @@ const HDPE_MATERIAL_PROPERTIES = {
   thermalConductivity: '0.4 W/m°C',
   brittlenessTemperature: '<-100 °C',
   maxOperatingTemp: '40 °C',
-  standard: 'SNI 4829:2015'
+  standard: 'SNI 4829:2015',
+  // Pressure & Temperature Derating Curve (% Rating vs Operating Temperature)
+  pressureDerating: [
+    { temp: 20, factor: 100 },
+    { temp: 25, factor: 94 },
+    { temp: 30, factor: 87 },
+    { temp: 35, factor: 81 },
+    { temp: 40, factor: 74 }
+  ]
 };
 
 // HDPE Pipe — Certifications & Compliance
