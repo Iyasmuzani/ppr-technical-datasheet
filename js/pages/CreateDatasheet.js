@@ -373,7 +373,7 @@ export default function CreateDatasheet() {
               `).join('')}
               <!-- Axis labels -->
               <text x="${padL + chartW / 2}" y="${H - 4}" text-anchor="middle" fill="#555" font-size="11">Temperatur Kerja (°C)</text>
-              <text x="14" y="${padT + chartH / 2}" text-anchor="middle" fill="#555" font-size="11" transform="rotate(-90, 14, ${padT + chartH / 2})">% Rating</text>
+              <text x="14" y="${padT + chartH / 2}" text-anchor="middle" fill="#555" font-size="9" transform="rotate(-90, 14, ${padT + chartH / 2})">% Rating Faktor Pengali Tekanan</text>
             </svg>
           </div>
           `;
