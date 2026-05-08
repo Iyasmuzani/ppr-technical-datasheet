@@ -283,6 +283,21 @@
   color: var(--pn20-red);
 }
 
+.badge--pn12 {
+  background: rgba(0, 150, 136, 0.15);
+  color: #00bfa5;
+}
+
+.badge--pn8 {
+  background: rgba(121, 85, 72, 0.15);
+  color: #a1887f;
+}
+
+.badge--pn6 {
+  background: rgba(120, 120, 120, 0.15);
+  color: #9e9e9e;
+}
+
 /* ---------- FORM INPUTS ---------- */
 .form-group {
   margin-bottom: var(--space-lg);

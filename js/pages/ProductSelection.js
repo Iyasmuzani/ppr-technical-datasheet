@@ -44,9 +44,9 @@ export default function ProductSelection() {
         </div>
         <select class="filter-bar__select" id="filter-pn">
           <option value="">All Pressure Ratings</option>
-          <option value="PN10" ${filterPN === 'PN10' ? 'selected' : ''}>PN 10</option>
-          <option value="PN16" ${filterPN === 'PN16' ? 'selected' : ''}>PN 16</option>
-          <option value="PN20" ${filterPN === 'PN20' ? 'selected' : ''}>PN 20</option>
+          ${[...new Set(PRODUCTS.items.map(p => p.pnRating))].filter(pn => pn !== '-').map(pn => `
+            <option value="${pn}" ${filterPN === pn ? 'selected' : ''}>${pn}</option>
+          `).join('')}
         </select>
       </div>
 
@@ -74,7 +74,7 @@ export default function ProductSelection() {
               ${items.map(p => `
                 <div class="product-card card--interactive" data-product-id="${p.id}">
                   <div class="product-card__image">
-                    ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-card__img">` : `<span style="font-size:3rem;">🟢</span>`}
+                    ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-card__img">` : `<span style="font-size:3rem;">${p.category === 'hdpe-pipe' ? '⚫' : '🟢'}</span>`}
                     <span class="badge badge--${p.pnClass} product-card__pn-badge">${p.pnRating}</span>
                   </div>
                   <div class="product-card__body">

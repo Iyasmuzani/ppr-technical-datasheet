@@ -72,6 +72,7 @@ export default function CreateDatasheet() {
 
   function renderStepProduct(el) {
     const pipes = PRODUCTS.items.filter(p => p.category === 'ppr-pipe');
+    const hdpePipes = PRODUCTS.items.filter(p => p.category === 'hdpe-pipe');
     const fittings = PRODUCTS.items.filter(p => p.category === 'fitting');
     const acc = PRODUCTS.items.filter(p => p.category === 'accessories');
 
@@ -80,6 +81,10 @@ export default function CreateDatasheet() {
       <h4 style="color: var(--text-secondary); margin-bottom: var(--space-md);">PPR Pipes</h4>
       <div class="product-grid" style="margin-bottom: var(--space-xl);">
         ${pipes.map(p => productCardHTML(p)).join('')}
+      </div>
+      <h4 style="color: var(--text-secondary); margin-bottom: var(--space-md);">HDPE Pipes</h4>
+      <div class="product-grid" style="margin-bottom: var(--space-xl);">
+        ${hdpePipes.map(p => productCardHTML(p)).join('')}
       </div>
       <h4 style="color: var(--text-secondary); margin-bottom: var(--space-md);">Fittings</h4>
       <div class="product-grid" style="margin-bottom: var(--space-xl);">
@@ -110,7 +115,7 @@ export default function CreateDatasheet() {
     return `
       <div class="product-card card--interactive ${selected ? 'selected' : ''}" data-product-id="${p.id}" style="cursor:pointer;">
         <div class="product-card__image">
-          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-card__img">` : `<span style="font-size:3rem;">🟢</span>`}
+          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-card__img">` : `<span style="font-size:3rem;">${p.category === 'hdpe-pipe' ? '⚫' : '🟢'}</span>`}
           <span class="badge badge--${p.pnClass} product-card__pn-badge">${p.pnRating}</span>
         </div>
         <div class="product-card__body">
