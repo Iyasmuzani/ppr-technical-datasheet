@@ -42,7 +42,7 @@ const HDPE_MATERIAL_PROPERTIES = {
   vicatSofteningPoint: '124 °C',
   thermalExpansion: '1.3 × 10⁻⁴ mm/m°C',
   thermalConductivity: '0.4 W/m°C',
-  brittlenessTemperature: '<-100 °C',
+  brittlenessTemperature: '-100 °C',
   maxOperatingTemp: '40 °C',
   standard: 'SNI 4829:2015',
   // Pressure & Temperature Derating Curve (% Rating vs Operating Temperature)
