@@ -552,21 +552,26 @@ export default function CreateDatasheet() {
         },
 
         // Product Info
-        { text: 'Product: ' + p.name, style: 'sectionTitle', margin: [0, 0, 0, 10] },
         {
-          table: {
-            widths: [120, '*'],
-            body: [
-              ['Material', p.material],
-              ['Standard', p.standard],
-              ['Application', p.application],
-              ['Pressure Rating', p.pnRating],
-              ...(p.maxTemp ? [['Max Temperature', p.maxTemp]] : [])
-            ]
-          },
-          layout: 'noBorders',
-          style: 'infoTable',
-          margin: [0, 0, 0, 20]
+          unbreakable: true,
+          stack: [
+            { text: 'Product: ' + p.name, style: 'sectionTitle', margin: [0, 0, 0, 10] },
+            {
+              table: {
+                widths: [120, '*'],
+                body: [
+                  ['Material', p.material],
+                  ['Standard', p.standard],
+                  ['Application', p.application],
+                  ['Pressure Rating', p.pnRating],
+                  ...(p.maxTemp ? [['Max Temperature', p.maxTemp]] : [])
+                ]
+              },
+              layout: 'noBorders',
+              style: 'infoTable',
+              margin: [0, 0, 0, 20]
+            }
+          ]
         },
 
         // Material Properties
@@ -591,24 +596,30 @@ export default function CreateDatasheet() {
             ['Standards & Regulatory Codes', { text: matProps.standard, bold: true }]
           ];
           return [
-            { text: 'Material Properties', style: 'sectionTitle', margin: [0, 0, 0, 10] },
             {
-              table: {
-                headerRows: 1,
-                widths: ['*', '*'],
-                body: [
-                  [{ text: 'Property', style: 'tableHeader' }, { text: 'Value', style: 'tableHeader' }],
-                  ...rows
-                ]
-              },
-              layout: {
-                hLineWidth: () => 0.5,
-                vLineWidth: () => 0.5,
-                hLineColor: () => '#e2e8f0',
-                vLineColor: () => '#e2e8f0',
-                fillColor: (row) => row === 0 ? '#1F3E7C' : (row % 2 === 0 ? '#f8fafc' : null)
-              },
-              margin: [0, 0, 0, 20]
+              unbreakable: true,
+              stack: [
+                { text: 'Material Properties', style: 'sectionTitle', margin: [0, 0, 0, 10] },
+                {
+                  table: {
+                    headerRows: 1,
+                    dontBreakRows: true,
+                    widths: ['*', '*'],
+                    body: [
+                      [{ text: 'Property', style: 'tableHeader' }, { text: 'Value', style: 'tableHeader' }],
+                      ...rows
+                    ]
+                  },
+                  layout: {
+                    hLineWidth: () => 0.5,
+                    vLineWidth: () => 0.5,
+                    hLineColor: () => '#e2e8f0',
+                    vLineColor: () => '#e2e8f0',
+                    fillColor: (row) => row === 0 ? '#1F3E7C' : (row % 2 === 0 ? '#f8fafc' : null)
+                  },
+                  margin: [0, 0, 0, 20]
+                }
+              ]
             }
           ];
         })(),
@@ -662,63 +673,46 @@ export default function CreateDatasheet() {
           `;
 
           return [
-            { text: 'Pressure & Temperature Derating Curve', style: 'sectionTitle', margin: [0, 0, 0, 10] },
             {
-              svg: svgString,
-              width: 500,
-              alignment: 'center',
-              margin: [0, 0, 0, 20]
+              unbreakable: true,
+              stack: [
+                { text: 'Pressure & Temperature Derating Curve', style: 'sectionTitle', margin: [0, 0, 0, 10] },
+                {
+                  svg: svgString,
+                  width: 500,
+                  alignment: 'center',
+                  margin: [0, 0, 0, 20]
+                }
+              ]
             }
           ];
         })(),
 
         // Spec Table
-        { text: 'Dimensional Specifications', style: 'sectionTitle', margin: [0, 0, 0, 10] },
         {
-          table: {
-            headerRows: 1,
-            widths: ['*', '*', '*', '*', ...(selectedSizeData[0]?.pipeLength ? ['*'] : [])],
-            body: [
-              [
-                { text: 'DN (mm)', style: 'tableHeader' },
-                { text: 'OD (mm)', style: 'tableHeader' },
-                { text: 'Wall Thickness (mm)', style: 'tableHeader' },
-                { text: 'Weight (kg/m)', style: 'tableHeader' },
-                ...(selectedSizeData[0]?.pipeLength ? [{ text: 'Length (m)', style: 'tableHeader' }] : [])
-              ],
-              ...selectedSizeData.map(s => [
-                { text: s.dn.toString(), bold: true },
-                s.od.toString(),
-                (s.wallThickness ?? '-').toString(),
-                s.weightPerM.toString(),
-                ...(s.pipeLength ? [s.pipeLength.toString()] : [])
-              ])
-            ]
-          },
-          layout: {
-            hLineWidth: () => 0.5,
-            vLineWidth: () => 0.5,
-            hLineColor: () => '#e2e8f0',
-            vLineColor: () => '#e2e8f0',
-            fillColor: (row) => row === 0 ? '#1F3E7C' : (row % 2 === 0 ? '#f8fafc' : null)
-          },
-          margin: [0, 0, 0, 20]
-        },
-
-        // Certifications & Compliance
-        ...(() => {
-          const isHDPE = p.category === 'hdpe-pipe';
-          const certs = isHDPE ? PRODUCTS.hdpeCertifications : PRODUCTS.certifications;
-          if (!certs) return [];
-          return [
-            { text: 'Certifications & Compliance', style: 'sectionTitle', margin: [0, 0, 0, 10] },
+          unbreakable: true,
+          stack: [
+            { text: 'Dimensional Specifications', style: 'sectionTitle', margin: [0, 0, 0, 10] },
             {
               table: {
                 headerRows: 1,
-                widths: ['*', '*'],
+                dontBreakRows: true,
+                widths: ['*', '*', '*', '*', ...(selectedSizeData[0]?.pipeLength ? ['*'] : [])],
                 body: [
-                  [{ text: 'Certification', style: 'tableHeader' }, { text: 'Status', style: 'tableHeader' }],
-                  ...Object.values(certs).map(c => [{ text: c.label, bold: true }, c.value])
+                  [
+                    { text: 'DN (mm)', style: 'tableHeader' },
+                    { text: 'OD (mm)', style: 'tableHeader' },
+                    { text: 'Wall Thickness (mm)', style: 'tableHeader' },
+                    { text: 'Weight (kg/m)', style: 'tableHeader' },
+                    ...(selectedSizeData[0]?.pipeLength ? [{ text: 'Length (m)', style: 'tableHeader' }] : [])
+                  ],
+                  ...selectedSizeData.map(s => [
+                    { text: s.dn.toString(), bold: true },
+                    s.od.toString(),
+                    (s.wallThickness ?? '-').toString(),
+                    s.weightPerM.toString(),
+                    ...(s.pipeLength ? [s.pipeLength.toString()] : [])
+                  ])
                 ]
               },
               layout: {
@@ -730,13 +724,52 @@ export default function CreateDatasheet() {
               },
               margin: [0, 0, 0, 20]
             }
+          ]
+        },
+
+        // Certifications & Compliance
+        ...(() => {
+          const isHDPE = p.category === 'hdpe-pipe';
+          const certs = isHDPE ? PRODUCTS.hdpeCertifications : PRODUCTS.certifications;
+          if (!certs) return [];
+          return [
+            {
+              unbreakable: true,
+              stack: [
+                { text: 'Certifications & Compliance', style: 'sectionTitle', margin: [0, 0, 0, 10] },
+                {
+                  table: {
+                    headerRows: 1,
+                    dontBreakRows: true,
+                    widths: ['*', '*'],
+                    body: [
+                      [{ text: 'Certification', style: 'tableHeader' }, { text: 'Status', style: 'tableHeader' }],
+                      ...Object.values(certs).map(c => [{ text: c.label, bold: true }, c.value])
+                    ]
+                  },
+                  layout: {
+                    hLineWidth: () => 0.5,
+                    vLineWidth: () => 0.5,
+                    hLineColor: () => '#e2e8f0',
+                    vLineColor: () => '#e2e8f0',
+                    fillColor: (row) => row === 0 ? '#1F3E7C' : (row % 2 === 0 ? '#f8fafc' : null)
+                  },
+                  margin: [0, 0, 0, 20]
+                }
+              ]
+            }
           ];
         })(),
 
         // Notes
         ...(state.notes ? [
-          { text: 'Notes', style: 'sectionTitle', margin: [0, 10, 0, 8] },
-          { text: state.notes, fontSize: 9, color: '#555' }
+          {
+            unbreakable: true,
+            stack: [
+              { text: 'Notes', style: 'sectionTitle', margin: [0, 10, 0, 8] },
+              { text: state.notes, fontSize: 9, color: '#555' }
+            ]
+          }
         ] : [])
       ],
       footer: {
