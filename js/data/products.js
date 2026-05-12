@@ -15,7 +15,7 @@ const MATERIAL_PROPERTIES = {
 const CERTIFICATIONS = {
   localContent: {
     label: 'Local Content (TKDN)',
-    value: 'Certified — Meets Indonesian TKDN requirements for local content compliance'
+    value: 'Certified — 30.17% local content'
   },
   permenkes: {
     label: 'Permenkes No. 2 Tahun 2023',
