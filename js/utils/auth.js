@@ -3,6 +3,9 @@
 
 const AUTH_PREFIX = 'rucika_techsheet_';
 const SESSION_KEY = 'rucika_techsheet_session';
+const SALT = '_rucika_salt_2026';
+const SALT_VERSION = '2';  // Increment this when changing SALT to auto-invalidate old hashes
+const DEFAULT_PASSWORD = 'rucika2026';
 
 /**
  * Simple hash function using SubtleCrypto (SHA-256).
@@ -11,14 +14,14 @@ const SESSION_KEY = 'rucika_techsheet_session';
 async function hashPassword(password) {
   if (window.crypto && window.crypto.subtle) {
     const encoder = new TextEncoder();
-    const data = encoder.encode(password + '_rucika_salt_2026');
+    const data = encoder.encode(password + SALT);
     const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   }
   // Fallback: simple hash for older browsers
   let hash = 0;
-  const str = password + '_rucika_salt_2026';
+  const str = password + SALT;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
@@ -30,13 +33,24 @@ async function hashPassword(password) {
 const Auth = {
   /**
    * Get the stored password hash, or set default if none exists.
-   * Default password: rucika2026
+   * Also checks salt version — if the salt changed, old hash is invalidated
+   * and reset to the default password.
    */
   async getPasswordHash() {
+    const storedVersion = localStorage.getItem(AUTH_PREFIX + 'salt_version');
+
+    // If salt version changed (or never set), invalidate old hash and reset
+    if (storedVersion !== SALT_VERSION) {
+      console.log('[Auth] Salt version changed, resetting to default password.');
+      localStorage.removeItem(AUTH_PREFIX + 'password_hash');
+      localStorage.setItem(AUTH_PREFIX + 'salt_version', SALT_VERSION);
+    }
+
     const stored = localStorage.getItem(AUTH_PREFIX + 'password_hash');
     if (stored) return stored;
+
     // Set default password on first use
-    const defaultHash = await hashPassword('rucika2026');
+    const defaultHash = await hashPassword(DEFAULT_PASSWORD);
     localStorage.setItem(AUTH_PREFIX + 'password_hash', defaultHash);
     return defaultHash;
   },
@@ -56,10 +70,6 @@ const Auth = {
   async login(password) {
     const inputHash = await hashPassword(password);
     const storedHash = await this.getPasswordHash();
-    console.log('[Auth Debug] Input password:', password);
-    console.log('[Auth Debug] Input hash:', inputHash);
-    console.log('[Auth Debug] Stored hash:', storedHash);
-    console.log('[Auth Debug] Match:', inputHash === storedHash);
     if (inputHash === storedHash) {
       sessionStorage.setItem(SESSION_KEY, 'authenticated');
       return true;
@@ -100,10 +110,11 @@ const Auth = {
    * This can be called from browser console as emergency reset.
    */
   async resetToDefault() {
-    const defaultHash = await hashPassword('rucika2026');
+    const defaultHash = await hashPassword(DEFAULT_PASSWORD);
     localStorage.setItem(AUTH_PREFIX + 'password_hash', defaultHash);
+    localStorage.setItem(AUTH_PREFIX + 'salt_version', SALT_VERSION);
     sessionStorage.removeItem(SESSION_KEY);
-    return 'Password reset to default: rucika2026';
+    return 'Password reset to default: ' + DEFAULT_PASSWORD;
   }
 };
 
