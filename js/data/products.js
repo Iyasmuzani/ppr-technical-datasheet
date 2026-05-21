@@ -79,6 +79,48 @@ const HDPE_CERTIFICATIONS = {
   }
 };
 
+// RUGlue — Solvent Cement Specifications
+const RUGLUE_SPECIFICATIONS = {
+  color: 'Clear',
+  standard: 'ASTM D 2564 & Rucika Standard',
+  variants: [
+    {
+      packaging: 'Can 400 gram',
+      viscosity: '215.28 cP',
+      specificGravity: '0.86 g/cc',
+      hydrostaticTest: 'Pass (20°C, 16 Bar, 1 Hour)',
+      tensileStrength: '163.01 kgf/cm²'
+    },
+    {
+      packaging: 'Can 100 gram',
+      viscosity: '264.64 cP',
+      specificGravity: '0.874 g/cc',
+      hydrostaticTest: 'Pass (20°C, 16 Bar, 1 Hour)',
+      tensileStrength: '168.91 kgf/cm²'
+    },
+    {
+      packaging: 'Bottle 60 gram',
+      viscosity: '267.07 cP',
+      specificGravity: '0.874 g/cc',
+      hydrostaticTest: 'Pass (20°C, 16 Bar, 1 Hour)',
+      tensileStrength: '155.14 kgf/cm²'
+    },
+    {
+      packaging: 'Tube 50 gram',
+      viscosity: '849.64 cP',
+      specificGravity: '0.896 g/cc',
+      hydrostaticTest: 'Pass (20°C, 16 Bar, 1 Hour)',
+      tensileStrength: '160.18 kgf/cm²'
+    }
+  ],
+  acceptanceCriteria: {
+    viscosity: 'Can & Bottle: 150–300 cP | Tube: min. 500 cP',
+    specificGravity: '0.8–0.9 g/cc',
+    hydrostaticTest: '20°C, 16 Bar, 1 Hour',
+    tensileStrength: 'Min. 100 kgf/cm²'
+  }
+};
+
 const PRODUCTS = {
   materialProperties: MATERIAL_PROPERTIES,
   certifications: CERTIFICATIONS,
@@ -88,7 +130,7 @@ const PRODUCTS = {
   categories: [
     { id: 'ppr-pipe', name: 'PPR Pipes', icon: '🟢', count: 3 },
     { id: 'fitting', name: 'Fittings', icon: '🔧', count: 3 },
-    { id: 'accessories', name: 'Accessories', icon: '⚙️', count: 1 },
+    { id: 'accessories', name: 'Accessories', icon: '⚙️', count: 2 },
     { id: 'hdpe-pipe', name: 'HDPE Pipes', icon: '⚫', count: 6 }
   ],
 
@@ -275,6 +317,32 @@ const PRODUCTS = {
         { dn: 40, od: 40, wallThickness: null, weightPerM: 0.014, pipeLength: null },
         { dn: 50, od: 50, wallThickness: null, weightPerM: 0.020, pipeLength: null },
         { dn: 63, od: 63, wallThickness: null, weightPerM: 0.028, pipeLength: null }
+      ]
+    },
+    {
+      id: 'acc-ruglue-solvent-cement',
+      category: 'accessories',
+      name: 'RUGlue Solvent Cement',
+      pnRating: '-',
+      pnClass: 'pn10',
+      description: 'RUGlue is a PVC solvent cement for pipes and fittings, specially formulated for tropical climates. Provides strong and permanent bonding, easy joint process without heat, and cost-effective pipe joining solution.',
+      material: 'PVC Solvent Cement',
+      standard: 'ASTM D 2564 & Rucika Standard',
+      application: 'PVC Pipe & Fitting Bonding',
+      sizeRange: '50g - 400g',
+      color: 'Clear',
+      image: './assets/products/ruglue.png',
+      advantages: [
+        'Strong and permanent bonding strength',
+        'Easy joint process without heat application',
+        'Cost-effective pipe joining solution'
+      ],
+      specifications: RUGLUE_SPECIFICATIONS,
+      sizes: [
+        { dn: null, od: null, wallThickness: null, weightPerM: null, pipeLength: null, packaging: 'Can 400 gram', netWeight: 400, viscosity: '215.28 cP', specificGravity: '0.86 g/cc', tensileStrength: '163.01 kgf/cm²' },
+        { dn: null, od: null, wallThickness: null, weightPerM: null, pipeLength: null, packaging: 'Can 100 gram', netWeight: 100, viscosity: '264.64 cP', specificGravity: '0.874 g/cc', tensileStrength: '168.91 kgf/cm²' },
+        { dn: null, od: null, wallThickness: null, weightPerM: null, pipeLength: null, packaging: 'Bottle 60 gram', netWeight: 60, viscosity: '267.07 cP', specificGravity: '0.874 g/cc', tensileStrength: '155.14 kgf/cm²' },
+        { dn: null, od: null, wallThickness: null, weightPerM: null, pipeLength: null, packaging: 'Tube 50 gram', netWeight: 50, viscosity: '849.64 cP', specificGravity: '0.896 g/cc', tensileStrength: '160.18 kgf/cm²' }
       ]
     },
 
