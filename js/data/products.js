@@ -88,28 +88,28 @@ const RUGLUE_SPECIFICATIONS = {
       packaging: 'Can 400 gram',
       viscosity: '215.28 cP',
       specificGravity: '0.86 g/cc',
-      hydrostaticTest: 'Pass (20°C, 16 Bar, 1 Hour)',
+      hydrostaticTest: 'Ok',
       tensileStrength: '163.01 kgf/cm²'
     },
     {
       packaging: 'Can 100 gram',
       viscosity: '264.64 cP',
       specificGravity: '0.874 g/cc',
-      hydrostaticTest: 'Pass (20°C, 16 Bar, 1 Hour)',
+      hydrostaticTest: 'Ok',
       tensileStrength: '168.91 kgf/cm²'
     },
     {
       packaging: 'Bottle 60 gram',
       viscosity: '267.07 cP',
       specificGravity: '0.874 g/cc',
-      hydrostaticTest: 'Pass (20°C, 16 Bar, 1 Hour)',
+      hydrostaticTest: 'Ok',
       tensileStrength: '155.14 kgf/cm²'
     },
     {
       packaging: 'Tube 50 gram',
       viscosity: '849.64 cP',
       specificGravity: '0.896 g/cc',
-      hydrostaticTest: 'Pass (20°C, 16 Bar, 1 Hour)',
+      hydrostaticTest: 'Ok',
       tensileStrength: '160.18 kgf/cm²'
     }
   ],
