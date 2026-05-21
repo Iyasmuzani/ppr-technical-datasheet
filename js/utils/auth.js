@@ -11,14 +11,14 @@ const SESSION_KEY = 'rucika_techsheet_session';
 async function hashPassword(password) {
   if (window.crypto && window.crypto.subtle) {
     const encoder = new TextEncoder();
-    const data = encoder.encode(password + '_rucika_salt_2024');
+    const data = encoder.encode(password + '_rucika_salt_2026');
     const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   }
   // Fallback: simple hash for older browsers
   let hash = 0;
-  const str = password + '_rucika_salt_2024';
+  const str = password + '_rucika_salt_2026';
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
@@ -30,13 +30,13 @@ async function hashPassword(password) {
 const Auth = {
   /**
    * Get the stored password hash, or set default if none exists.
-   * Default password: rucika2024
+   * Default password: rucika2026
    */
   async getPasswordHash() {
     const stored = localStorage.getItem(AUTH_PREFIX + 'password_hash');
     if (stored) return stored;
     // Set default password on first use
-    const defaultHash = await hashPassword('rucika2024');
+    const defaultHash = await hashPassword('rucika2026');
     localStorage.setItem(AUTH_PREFIX + 'password_hash', defaultHash);
     return defaultHash;
   },
@@ -92,14 +92,14 @@ const Auth = {
   },
 
   /**
-   * Reset password to default (rucika2024).
+   * Reset password to default (rucika2026).
    * This can be called from browser console as emergency reset.
    */
   async resetToDefault() {
-    const defaultHash = await hashPassword('rucika2024');
+    const defaultHash = await hashPassword('rucika2026');
     localStorage.setItem(AUTH_PREFIX + 'password_hash', defaultHash);
     sessionStorage.removeItem(SESSION_KEY);
-    return 'Password reset to default: rucika2024';
+    return 'Password reset to default: rucika2026';
   }
 };
 
