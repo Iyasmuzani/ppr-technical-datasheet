@@ -1,5 +1,7 @@
 // Rucika TechSheet — Main Application Entry
 import Router from './router.js';
+import Auth from './utils/auth.js';
+import LoginScreen from './components/LoginScreen.js';
 import Dashboard from './pages/Dashboard.js';
 import ProductSelection from './pages/ProductSelection.js';
 import CreateDatasheet from './pages/CreateDatasheet.js';
@@ -13,8 +15,20 @@ Router.register('/create', CreateDatasheet);
 Router.register('/history', History);
 Router.register('/settings', Settings);
 
-// Init router
+// Init app with auth check
 document.addEventListener('DOMContentLoaded', () => {
+  if (Auth.isAuthenticated()) {
+    initApp();
+  } else {
+    LoginScreen(() => initApp());
+  }
+});
+
+function initApp() {
+  // Ensure app is visible
+  const app = document.querySelector('.app');
+  if (app) app.style.display = '';
+
   Router.init();
 
   // Mobile sidebar toggle
@@ -25,4 +39,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close sidebar on navigation (mobile)
     window.addEventListener('hashchange', () => sidebar.classList.remove('open'));
   }
-});
+
+  // Logout button
+  const logoutBtn = document.getElementById('btn-logout');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      Auth.logout();
+      location.reload();
+    });
+  }
+
+  // Expose emergency reset for console use
+  window.__resetPassword = () => Auth.resetToDefault();
+}
