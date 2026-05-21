@@ -56,6 +56,10 @@ const Auth = {
   async login(password) {
     const inputHash = await hashPassword(password);
     const storedHash = await this.getPasswordHash();
+    console.log('[Auth Debug] Input password:', password);
+    console.log('[Auth Debug] Input hash:', inputHash);
+    console.log('[Auth Debug] Stored hash:', storedHash);
+    console.log('[Auth Debug] Match:', inputHash === storedHash);
     if (inputHash === storedHash) {
       sessionStorage.setItem(SESSION_KEY, 'authenticated');
       return true;
