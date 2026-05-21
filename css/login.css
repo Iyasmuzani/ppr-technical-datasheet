@@ -85,16 +85,16 @@
   width: 72px;
   height: 72px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, rgba(31, 62, 124, 0.3), rgba(46, 125, 50, 0.2));
-  border: 1px solid var(--border-subtle);
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.9);
   margin-bottom: var(--space-md);
-  box-shadow: var(--shadow-glow);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), var(--shadow-glow);
   animation: logoPulse 3s ease-in-out infinite;
 }
 
 @keyframes logoPulse {
-  0%, 100% { box-shadow: var(--shadow-glow); }
-  50% { box-shadow: 0 0 30px rgba(31, 62, 124, 0.4), 0 0 60px rgba(46, 125, 50, 0.15); }
+  0%, 100% { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), var(--shadow-glow); }
+  50% { box-shadow: 0 8px 30px rgba(31, 62, 124, 0.35), 0 0 45px rgba(46, 125, 50, 0.15); }
 }
 
 .login-brand__logo {

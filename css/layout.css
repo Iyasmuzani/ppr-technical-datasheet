@@ -30,18 +30,20 @@
   border-bottom: 1px solid var(--border-subtle);
 }
 
-.sidebar__logo {
+.sidebar__logo-img {
   width: 40px;
-  height: 40px;
-  background: var(--gradient-primary);
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #fff;
+  height: auto;
+  background: #ffffff;
+  padding: 4px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sidebar__logo-img:hover {
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar__title {
