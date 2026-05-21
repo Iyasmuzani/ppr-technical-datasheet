@@ -141,7 +141,7 @@ export default function Settings() {
             <div class="security-info-box__text">
               <strong>Password Protection Active</strong><br>
               This application requires a password to access. The session will expire when the browser or tab is closed. 
-              Default password: <code style="background:var(--bg-primary); padding:2px 6px; border-radius:4px; font-size:var(--font-size-sm);">rucika2024</code>
+              Default password: <code style="background:var(--bg-primary); padding:2px 6px; border-radius:4px; font-size:var(--font-size-sm);">rucika2026</code>
             </div>
           </div>
 
@@ -179,7 +179,7 @@ export default function Settings() {
             __resetPassword()
           </code>
           <p style="color:var(--text-muted); font-size:var(--font-size-xs); margin-top:var(--space-sm);">
-            This will reset the password back to the default: <strong>rucika2024</strong>
+            This will reset the password back to the default: <strong>rucika2026</strong>
           </p>
         </div>
       </div>
@@ -234,9 +234,9 @@ export default function Settings() {
 
     // Reset to default
     el.querySelector('#btn-reset-pw').addEventListener('click', async () => {
-      if (confirm('Are you sure you want to reset the password to default (rucika2024)?')) {
+      if (confirm('Are you sure you want to reset the password to default (rucika2026)?')) {
         await Auth.resetToDefault();
-        showToast('Password has been reset to default: rucika2024', 'success');
+        showToast('Password has been reset to default: rucika2026', 'success');
         el.querySelector('#sec-current-pw').value = '';
         el.querySelector('#sec-new-pw').value = '';
         el.querySelector('#sec-confirm-pw').value = '';
