@@ -1,0 +1,21 @@
+{
+  "name": "ppr-technical-datasheet",
+  "version": "1.0.0",
+  "description": "Rucika TechSheet — Generate professional technical datasheets for PPR pipes and fittings",
+  "type": "module",
+  "scripts": {
+    "dev": "npx http-server -p 3000",
+    "preview": "npx http-server -p 3000"
+  },
+  "keywords": [
+    "datasheet",
+    "ppr",
+    "pipes",
+    "rucika"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1"
+  }
+}

@@ -1,4 +1,5 @@
 // Rucika TechSheet — Main Application Entry
+import { inject } from '@vercel/analytics';
 import Router from './router.js';
 import Auth from './utils/auth.js';
 import LoginScreen from './components/LoginScreen.js';
@@ -7,6 +8,9 @@ import ProductSelection from './pages/ProductSelection.js';
 import CreateDatasheet from './pages/CreateDatasheet.js';
 import History from './pages/History.js';
 import Settings from './pages/Settings.js';
+
+// Initialize Vercel Web Analytics
+inject();
 
 // Register routes
 Router.register('/', Dashboard);
