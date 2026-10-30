@@ -63,7 +63,7 @@ const HDPE_CERTIFICATIONS = {
   },
   sniCertificate: {
     label: 'SNI Certificate',
-    value: 'SNI 4829.2:2015 — Certified for PE piping systems'
+    value: 'SNI 4829.2:2015, SNI 9362:2025, ISO 4427.2:2019 — Certified for PE piping systems'
   },
   permenkes: {
     label: 'Drinking Water Compliance',
