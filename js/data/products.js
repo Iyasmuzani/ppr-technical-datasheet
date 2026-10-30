@@ -59,7 +59,7 @@ const HDPE_MATERIAL_PROPERTIES = {
 const HDPE_CERTIFICATIONS = {
   localContent: {
     label: 'Local Content (TKDN)',
-    value: 'Certified — 55.03% local content'
+    value: 'Certified — 84.35% local content'
   },
   sniCertificate: {
     label: 'SNI Certificate',
