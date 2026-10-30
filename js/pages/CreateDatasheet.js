@@ -543,8 +543,8 @@ export default function CreateDatasheet() {
       <table style="width:100%; margin-bottom:24px; border-collapse:collapse;">
         ${Object.values(certs).map((c, i) => `
           <tr${i % 2 === 1 ? ' style="background:#f8fafc;"' : ''}>
-            <td style="padding:6px 12px; font-size:0.8rem; color:#666; width:200px; font-weight:600;">${c.label}</td>
-            <td style="padding:6px 12px; font-size:0.8rem;">${c.value}</td>
+            <td style="padding:6px 12px; font-size:0.8rem; color:#666; width:200px; font-weight:600; vertical-align:top;">${c.label}</td>
+            <td style="padding:6px 12px; font-size:0.8rem; white-space:pre-line;">${c.value}</td>
           </tr>
         `).join('')}
       </table>

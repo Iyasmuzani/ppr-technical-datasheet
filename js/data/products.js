@@ -48,10 +48,10 @@ const HDPE_MATERIAL_PROPERTIES = {
   // Pressure & Temperature Derating Curve (% Rating vs Operating Temperature)
   pressureDerating: [
     { temp: 20, factor: 100 },
-    { temp: 25, factor: 94 },
-    { temp: 30, factor: 87 },
-    { temp: 35, factor: 81 },
-    { temp: 40, factor: 74 }
+    { temp: 25, factor: 92.5 },
+    { temp: 30, factor: 85 },
+    { temp: 35, factor: 79 },
+    { temp: 40, factor: 73 }
   ]
 };
 
@@ -62,8 +62,13 @@ const HDPE_CERTIFICATIONS = {
     value: 'Certified — 84.35% local content'
   },
   sniCertificate: {
-    label: 'SNI Certificate',
-    value: 'SNI 4829.2:2015, SNI 9362:2025, ISO 4427.2:2019 — Certified for PE piping systems'
+    label: 'Standard Certificate',
+    value: [
+      'Certified for PE piping systems:',
+      '• SNI 4829.2:2015',
+      '• SNI 9362:2025',
+      '• ISO 4427.2:2019'
+    ].join('\n')
   },
   permenkes: {
     label: 'Drinking Water Compliance',
