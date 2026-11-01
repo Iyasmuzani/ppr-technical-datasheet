@@ -121,7 +121,7 @@ const PVC_MATERIAL_PROPERTIES = {
 const PVC_CERTIFICATIONS = {
   localContent: {
     label: 'Local Content (TKDN)',
-    value: 'Certified — High local content (TKDN) compliant'
+    value: 'Certified — 92.81% local content'
   },
   standardCertificate: {
     label: 'Standard Reference',
@@ -148,7 +148,7 @@ const PVC_CERTIFICATIONS = {
 const PVC_JIS_CERTIFICATIONS = {
   localContent: {
     label: 'Local Content (TKDN)',
-    value: 'Certified — High local content (TKDN) compliant'
+    value: 'Certified — 92.81% local content'
   },
   standardCertificate: {
     label: 'Standard Reference',
