@@ -768,6 +768,7 @@ const PRODUCTS = {
       sizeRange: '1 1/4" - 12" (42 - 318 mm)',
       color: 'White',
       weightUnit: 'kg',
+      hideDeratingCurve: true,
       sizes: [
         { dn: 42, inch: '1 1/4"', od: '41.8 – 42.2', wallThickness: '1.3 – 1.7', weightPerM: '1.10 (0.96 – 1.25)', pipeLength: '4 (4000 – 4010 mm)' },
         { dn: 48, inch: '1 1/2"', od: '47.8 – 48.2', wallThickness: '1.3 – 1.7', weightPerM: '1.26 (1.10 – 1.43)', pipeLength: '4 (4000 – 4010 mm)' },

@@ -505,6 +505,7 @@ export default function CreateDatasheet() {
       })()}
 
       ${(() => {
+        if (p.hideDeratingCurve) return '';
         const isHDPE = p.category === 'hdpe-pipe';
         const isPVC = p.category === 'pvc-pipe';
         const matProps = isHDPE
@@ -790,7 +791,7 @@ export default function CreateDatasheet() {
 
         // Pressure & Temperature Derating Curve (HDPE & PVC)
         ...(() => {
-          if (isSC) return [];
+          if (isSC || p.hideDeratingCurve) return [];
           const isHDPE = p.category === 'hdpe-pipe';
           const isPVC = p.category === 'pvc-pipe';
           const matProps = isHDPE
