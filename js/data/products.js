@@ -765,20 +765,21 @@ const PRODUCTS = {
       standard: 'SNI 9324:2024',
       application: 'Non-Pressure Drainage, Wastewater, Sewage & Rainwater Systems',
       maxTemp: '45 °C',
-      sizeRange: '1 1/4" - 12" (32 - 300 mm)',
+      sizeRange: '1 1/4" - 12" (42 - 318 mm)',
       color: 'White',
+      weightUnit: 'kg',
       sizes: [
-        { dn: 32, inch: '1 1/4"', od: 42, wallThickness: 1.3, weightPerM: 0.273, pipeLength: 4 },
-        { dn: 40, inch: '1 1/2"', od: 48, wallThickness: 1.3, weightPerM: 0.313, pipeLength: 4 },
-        { dn: 50, inch: '2"', od: 60, wallThickness: 1.3, weightPerM: 0.394, pipeLength: 4 },
-        { dn: 65, inch: '2 1/2"', od: 76, wallThickness: 1.4, weightPerM: 0.535, pipeLength: 4 },
-        { dn: 75, inch: '3"', od: 89, wallThickness: 1.6, weightPerM: 0.705, pipeLength: 4 },
-        { dn: 100, inch: '4"', od: 114, wallThickness: 2.0, weightPerM: 1.104, pipeLength: 4 },
-        { dn: 125, inch: '5"', od: 140, wallThickness: 2.6, weightPerM: 1.755, pipeLength: 4 },
-        { dn: 150, inch: '6"', od: 165, wallThickness: 3.0, weightPerM: 2.360, pipeLength: 4 },
-        { dn: 200, inch: '8"', od: 216, wallThickness: 4.2, weightPerM: 4.273, pipeLength: 4 },
-        { dn: 250, inch: '10"', od: 267, wallThickness: 5.2, weightPerM: 6.573, pipeLength: 4 },
-        { dn: 300, inch: '12"', od: 318, wallThickness: 6.2, weightPerM: 9.228, pipeLength: 4 }
+        { dn: 42, inch: '1 1/4"', od: '41.8 – 42.2', wallThickness: '1.3 – 1.7', weightPerM: '1.10 (0.96 – 1.25)', pipeLength: '4 (4000 – 4010 mm)' },
+        { dn: 48, inch: '1 1/2"', od: '47.8 – 48.2', wallThickness: '1.3 – 1.7', weightPerM: '1.26 (1.10 – 1.43)', pipeLength: '4 (4000 – 4010 mm)' },
+        { dn: 60, inch: '2"', od: '59.8 – 60.2', wallThickness: '1.3 – 1.7', weightPerM: '1.59 (1.38 – 1.81)', pipeLength: '4 (4000 – 4010 mm)' },
+        { dn: 76, inch: '2 1/2"', od: '75.7 – 76.3', wallThickness: '1.4 – 1.8', weightPerM: '2.16 (1.89 – 2.43)', pipeLength: '4 (4000 – 4010 mm)' },
+        { dn: 89, inch: '3"', od: '88.7 – 89.3', wallThickness: '1.6 – 2.0', weightPerM: '2.84 (2.53 – 3.16)', pipeLength: '4 (4000 – 4010 mm)' },
+        { dn: 114, inch: '4"', od: '113.6 – 114.4', wallThickness: '2.0 – 2.4', weightPerM: '4.45 (4.05 – 4.87)', pipeLength: '4 (4000 – 4010 mm)' },
+        { dn: 140, inch: '5"', od: '139.5 – 140.5', wallThickness: '2.6 – 3.1', weightPerM: '7.08 (6.45 – 7.72)', pipeLength: '4 (4000 – 4010 mm)' },
+        { dn: 165, inch: '6"', od: '164.4 – 165.6', wallThickness: '3.0 – 3.5', weightPerM: '9.52 (8.79 – 10.28)', pipeLength: '4 (4000 – 4010 mm)' },
+        { dn: 216, inch: '8"', od: '215.2 – 216.8', wallThickness: '4.2 – 4.8', weightPerM: '17.23 (16.07 – 18.44)', pipeLength: '4 (4000 – 4010 mm)' },
+        { dn: 267, inch: '10"', od: '266.1 – 267.9', wallThickness: '5.2 – 6.0', weightPerM: '26.50 (24.37 – 28.48)', pipeLength: '4 (4000 – 4010 mm)' },
+        { dn: 318, inch: '12"', od: '317 – 319', wallThickness: '6.2 – 7.0', weightPerM: '36.62 (34.61 – 38.95)', pipeLength: '4 (4000 – 4010 mm)' }
       ]
     },
 
