@@ -1,5 +1,5 @@
 // Rucika TechSheet — Create Datasheet Wizard (4-Step)
-import PRODUCTS from '../data/products.js?v=1';
+import PRODUCTS from '../data/products.js?v=2';
 import Storage from '../utils/storage.js';
 import Router from '../router.js';
 import { showToast, formatDate } from '../utils/helpers.js';
@@ -461,11 +461,11 @@ export default function CreateDatasheet() {
       ${(() => {
         const isHDPE = p.category === 'hdpe-pipe';
         const isPVC = p.category === 'pvc-pipe';
-        const matProps = isHDPE
+        const matProps = p.materialProperties || (isHDPE
           ? PRODUCTS.hdpeMaterialProperties
           : isPVC
             ? PRODUCTS.pvcMaterialProperties
-            : PRODUCTS.materialProperties;
+            : PRODUCTS.materialProperties);
         if (!matProps || p.category === 'accessories') return '';
         const rows = isPVC ? [
           ['Specific Gravity', matProps.specificGravity],
@@ -474,7 +474,7 @@ export default function CreateDatasheet() {
           ['Modulus of Elasticity', matProps.modulusOfElasticity],
           ['Surface Resistance', matProps.surfaceResistance],
           ['Max Operating Temperature', matProps.maxOperatingTemp],
-          ['Standards & Regulatory Codes', `<strong>${p.standard || matProps.standard}</strong>`]
+          ['Standards & Regulatory Codes', `<strong>${matProps.standard}</strong>`]
         ] : [
           ['Density', matProps.density],
           ...(isHDPE ? [
@@ -489,7 +489,7 @@ export default function CreateDatasheet() {
           ['Thermal Conductivity', matProps.thermalConductivity],
           ...(isHDPE ? [['Brittleness Temperature', matProps.brittlenessTemperature]] : []),
           ['Max Operating Temperature', matProps.maxOperatingTemp],
-          ['Standards & Regulatory Codes', `<strong>${p.standard || matProps.standard}</strong>`]
+          ['Standards & Regulatory Codes', `<strong>${matProps.standard}</strong>`]
         ];
         return `
       <h3 style="font-size:1rem; color:#1F3E7C; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">Material Properties</h3>
@@ -729,11 +729,11 @@ export default function CreateDatasheet() {
           if (isSC) return [];
           const isHDPE = p.category === 'hdpe-pipe';
           const isPVC = p.category === 'pvc-pipe';
-          const matProps = isHDPE
+          const matProps = p.materialProperties || (isHDPE
             ? PRODUCTS.hdpeMaterialProperties
             : isPVC
               ? PRODUCTS.pvcMaterialProperties
-              : PRODUCTS.materialProperties;
+              : PRODUCTS.materialProperties);
           if (!matProps || p.category === 'accessories') return [];
           const rows = isPVC ? [
             ['Specific Gravity', matProps.specificGravity],
@@ -742,7 +742,7 @@ export default function CreateDatasheet() {
             ['Modulus of Elasticity', matProps.modulusOfElasticity],
             ['Surface Resistance', matProps.surfaceResistance],
             ['Max Operating Temperature', matProps.maxOperatingTemp],
-            ['Standards & Regulatory Codes', { text: p.standard || matProps.standard, bold: true }]
+            ['Standards & Regulatory Codes', { text: matProps.standard, bold: true }]
           ] : [
             ['Density', matProps.density],
             ...(isHDPE ? [
@@ -757,7 +757,7 @@ export default function CreateDatasheet() {
             ['Thermal Conductivity', matProps.thermalConductivity],
             ...(isHDPE ? [['Brittleness Temperature', matProps.brittlenessTemperature]] : []),
             ['Max Operating Temperature', matProps.maxOperatingTemp],
-            ['Standards & Regulatory Codes', { text: p.standard || matProps.standard, bold: true }]
+            ['Standards & Regulatory Codes', { text: matProps.standard, bold: true }]
           ];
           return [
             {

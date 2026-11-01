@@ -84,7 +84,7 @@ const HDPE_CERTIFICATIONS = {
   }
 };
 
-// PVC Pipe — Material Properties (uPVC)
+// PVC Pipe (Rucika Standard AW & D) — Material Properties (uPVC)
 const PVC_MATERIAL_PROPERTIES = {
   specificGravity: '1.40 g/cm³',
   thermalExpansion: '8 × 10⁻² mm/m.°C',
@@ -115,6 +115,12 @@ const PVC_MATERIAL_PROPERTIES = {
     xLabelPdf: 'Temperature Layanan (C)',
     yLabel: 'Faktor Derating (fT)'
   }
+};
+
+// PVC Pipe (Rucika JIS AW/VP & D/VU) — Material Properties (uPVC)
+const PVC_JIS_MATERIAL_PROPERTIES = {
+  ...PVC_MATERIAL_PROPERTIES,
+  standard: 'JIS K 6741 & JIS K 6742'
 };
 
 // PVC Pipe (Rucika Standard AW & D) — Certifications & Compliance
@@ -220,7 +226,9 @@ const PRODUCTS = {
   hdpeMaterialProperties: HDPE_MATERIAL_PROPERTIES,
   hdpeCertifications: HDPE_CERTIFICATIONS,
   pvcMaterialProperties: PVC_MATERIAL_PROPERTIES,
+  pvcJisMaterialProperties: PVC_JIS_MATERIAL_PROPERTIES,
   pvcCertifications: PVC_CERTIFICATIONS,
+  pvcJisCertifications: PVC_JIS_CERTIFICATIONS,
 
   categories: [
     { id: 'ppr-pipe', name: 'PPR Pipes', icon: '🟢', count: 3 },
@@ -784,6 +792,7 @@ const PRODUCTS = {
       description: 'Rucika JIS AW/VP is a heavy-duty uPVC pipe manufactured strictly to Japanese Industrial Standards (JIS K 6741 / JIS K 6742) with thicker wall dimensions and higher safety factor for pressurized clean water supply and industrial applications up to 10 kgf/cm² (10 Bar).',
       material: 'uPVC (Unplasticized Polyvinyl Chloride)',
       standard: 'JIS K 6741 & JIS K 6742',
+      materialProperties: PVC_JIS_MATERIAL_PROPERTIES,
       certifications: PVC_JIS_CERTIFICATIONS,
       application: 'Heavy-Duty Pressurized Clean Water Supply & Industrial Piping (up to 10 kgf/cm²)',
       maxTemp: '45 °C',
@@ -816,7 +825,8 @@ const PRODUCTS = {
       pnClass: 'pn6',
       description: 'Rucika JIS D/VU is a uPVC pipe manufactured strictly to Japanese Industrial Standards (JIS K 6741) for industrial and commercial non-pressure drainage, wastewater, sewage, and air ventilation systems.',
       material: 'uPVC (Unplasticized Polyvinyl Chloride)',
-      standard: 'JIS K 6741',
+      standard: 'JIS K 6741 & JIS K 6742',
+      materialProperties: PVC_JIS_MATERIAL_PROPERTIES,
       certifications: PVC_JIS_CERTIFICATIONS,
       application: 'Industrial & Commercial Drainage, Wastewater, Sewage & Air Ventilation',
       maxTemp: '45 °C',
