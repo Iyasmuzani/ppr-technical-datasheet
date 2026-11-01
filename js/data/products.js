@@ -86,13 +86,11 @@ const HDPE_CERTIFICATIONS = {
 
 // PVC Pipe — Material Properties (uPVC)
 const PVC_MATERIAL_PROPERTIES = {
-  density: '1.45 g/cm³',
-  tensileStrength: '≥ 45 MPa',
-  elongationAtBreak: '≥ 80%',
-  modulusOfElasticity: '≥ 3000 MPa',
-  vicatSofteningPoint: '≥ 79 °C',
-  thermalExpansion: '0.07 mm/m°C',
-  thermalConductivity: '0.15 W/m°C',
+  specificGravity: '1.40 g/cm³',
+  thermalExpansion: '8 × 10⁻² mm/m.°C',
+  thermalConductivity: '0.15 W/m.°C',
+  modulusOfElasticity: '3000 N/mm²',
+  surfaceResistance: '> 10¹² Ohm',
   maxOperatingTemp: '45 °C',
   standard: 'SNI 9324:2024',
   // Pressure & Temperature Derating Curve (Faktor Derating fT vs Temperature Layanan °C)

@@ -467,23 +467,39 @@ export default function CreateDatasheet() {
             ? PRODUCTS.pvcMaterialProperties
             : PRODUCTS.materialProperties;
         if (!matProps || p.category === 'accessories') return '';
+        const rows = isPVC ? [
+          ['Specific Gravity', matProps.specificGravity],
+          ['Coefficient of Linear Expansion', matProps.thermalExpansion],
+          ['Thermal Conductivity', matProps.thermalConductivity],
+          ['Modulus of Elasticity', matProps.modulusOfElasticity],
+          ['Surface Resistance', matProps.surfaceResistance],
+          ['Max Operating Temperature', matProps.maxOperatingTemp],
+          ['Standards & Regulatory Codes', `<strong>${p.standard || matProps.standard}</strong>`]
+        ] : [
+          ['Density', matProps.density],
+          ...(isHDPE ? [
+            ['Melt Flow Rate (MFR)', matProps.meltFlowRate],
+            ['Oxidation Induction Time (OIT)', matProps.oxidationInductionTime]
+          ] : []),
+          ['Tensile Strength @ Yield', matProps.tensileStrength],
+          ['Elongation @ Break', matProps.elongationAtBreak],
+          ['Modulus of Elasticity', matProps.modulusOfElasticity],
+          ...(matProps.vicatSofteningPoint ? [['Vicat Softening Point', matProps.vicatSofteningPoint]] : []),
+          ['Coeff. of Thermal Expansion', matProps.thermalExpansion],
+          ['Thermal Conductivity', matProps.thermalConductivity],
+          ...(isHDPE ? [['Brittleness Temperature', matProps.brittlenessTemperature]] : []),
+          ['Max Operating Temperature', matProps.maxOperatingTemp],
+          ['Standards & Regulatory Codes', `<strong>${p.standard || matProps.standard}</strong>`]
+        ];
         return `
       <h3 style="font-size:1rem; color:#1F3E7C; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">Material Properties</h3>
       <table style="width:100%; margin-bottom:24px; border-collapse:collapse;">
-        <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666; width:200px;">Density</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.density}</td></tr>
-        ${isHDPE ? `
-        <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Melt Flow Rate (MFR)</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.meltFlowRate}</td></tr>
-        <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Oxidation Induction Time (OIT)</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.oxidationInductionTime}</td></tr>
-        ` : ''}
-        <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Tensile Strength @ Yield</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.tensileStrength}</td></tr>
-        <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Elongation @ Break</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.elongationAtBreak}</td></tr>
-        <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Modulus of Elasticity</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.modulusOfElasticity}</td></tr>
-        ${matProps.vicatSofteningPoint ? `<tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Vicat Softening Point</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.vicatSofteningPoint}</td></tr>` : ''}
-        <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Coeff. of Thermal Expansion</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.thermalExpansion}</td></tr>
-        <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Thermal Conductivity</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.thermalConductivity}</td></tr>
-        ${isHDPE ? `<tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Brittleness Temperature</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.brittlenessTemperature}</td></tr>` : ''}
-        <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Max Operating Temperature</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.maxOperatingTemp}</td></tr>
-        <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Standards & Regulatory Codes</td><td style="padding:4px 12px; font-size:0.8rem; font-weight:600;">${p.standard || matProps.standard}</td></tr>
+        ${rows.map(([label, val], i) => `
+          <tr${i % 2 === 1 ? ' style="background:#f8fafc;"' : ''}>
+            <td style="padding:4px 12px; font-size:0.8rem; color:#666; width:220px;">${label}</td>
+            <td style="padding:4px 12px; font-size:0.8rem;">${val}</td>
+          </tr>
+        `).join('')}
       </table>
       `;
       })()}
@@ -719,7 +735,15 @@ export default function CreateDatasheet() {
               ? PRODUCTS.pvcMaterialProperties
               : PRODUCTS.materialProperties;
           if (!matProps || p.category === 'accessories') return [];
-          const rows = [
+          const rows = isPVC ? [
+            ['Specific Gravity', matProps.specificGravity],
+            ['Coefficient of Linear Expansion', matProps.thermalExpansion],
+            ['Thermal Conductivity', matProps.thermalConductivity],
+            ['Modulus of Elasticity', matProps.modulusOfElasticity],
+            ['Surface Resistance', matProps.surfaceResistance],
+            ['Max Operating Temperature', matProps.maxOperatingTemp],
+            ['Standards & Regulatory Codes', { text: p.standard || matProps.standard, bold: true }]
+          ] : [
             ['Density', matProps.density],
             ...(isHDPE ? [
               ['Melt Flow Rate (MFR)', matProps.meltFlowRate],
