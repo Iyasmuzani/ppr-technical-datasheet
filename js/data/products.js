@@ -94,7 +94,7 @@ const PVC_MATERIAL_PROPERTIES = {
   thermalExpansion: '0.07 mm/m°C',
   thermalConductivity: '0.15 W/m°C',
   maxOperatingTemp: '60 °C',
-  standard: 'JIS K 6741, JIS K 6742 & Rucika Standard'
+  standard: 'SNI 9324:2024, JIS K 6741 & JIS K 6742'
 };
 
 // PVC Pipe — Certifications & Compliance
@@ -107,9 +107,9 @@ const PVC_CERTIFICATIONS = {
     label: 'Standard Reference',
     value: [
       'Manufactured in accordance with:',
+      '• SNI 9324:2024 (Rucika Standard AW & D)',
       '• JIS K 6741 (Unplasticized Poly(Vinyl Chloride) (PVC-U) Pipes)',
-      '• JIS K 6742 (Unplasticized Poly(Vinyl Chloride) (PVC-U) Pipes for Water Supply)',
-      '• Rucika Standard'
+      '• JIS K 6742 (Unplasticized Poly(Vinyl Chloride) (PVC-U) Pipes for Water Supply)'
     ].join('\n')
   },
   permenkes: {
@@ -673,9 +673,9 @@ const PRODUCTS = {
       name: 'Rucika Standard AW',
       pnRating: 'Class AW (10 Bar)',
       pnClass: 'pn10',
-      description: 'Rucika Standard AW is a uPVC (Unplasticized Polyvinyl Chloride) pressure pipe designed for clean water distribution systems with working pressure up to 10 kgf/cm² (10 Bar). Formulated with Calcium-Zinc (Ca-Zn) lead-free stabilizer.',
+      description: 'Rucika Standard AW is a uPVC (Unplasticized Polyvinyl Chloride) pressure pipe following SNI 9324:2024 standard, designed for clean water distribution systems with working pressure up to 10 kgf/cm² (10 Bar). Formulated with Calcium-Zinc (Ca-Zn) lead-free stabilizer.',
       material: 'uPVC (Unplasticized Polyvinyl Chloride)',
-      standard: 'Rucika Standard / JIS K 6741',
+      standard: 'SNI 9324:2024',
       application: 'Pressurized Clean Water Supply & Distribution (up to 10 kgf/cm²)',
       maxTemp: '60 °C',
       sizeRange: '1/2" - 12" (16 - 300 mm)',
@@ -705,9 +705,9 @@ const PRODUCTS = {
       name: 'Rucika Standard D',
       pnRating: 'Class D (Drainage)',
       pnClass: 'pn6',
-      description: 'Rucika Standard D is a uPVC (Unplasticized Polyvinyl Chloride) non-pressure pipe designed for domestic wastewater, drainage, rainwater, and sewage gravity flow systems. Formulated with Calcium-Zinc (Ca-Zn) lead-free stabilizer.',
+      description: 'Rucika Standard D is a uPVC (Unplasticized Polyvinyl Chloride) non-pressure pipe following SNI 9324:2024 standard, designed for domestic wastewater, drainage, rainwater, and sewage gravity flow systems. Formulated with Calcium-Zinc (Ca-Zn) lead-free stabilizer.',
       material: 'uPVC (Unplasticized Polyvinyl Chloride)',
-      standard: 'Rucika Standard / JIS K 6741',
+      standard: 'SNI 9324:2024',
       application: 'Non-Pressure Drainage, Wastewater, Sewage & Rainwater Systems',
       maxTemp: '60 °C',
       sizeRange: '1 1/4" - 12" (32 - 300 mm)',

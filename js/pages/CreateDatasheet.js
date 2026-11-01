@@ -483,7 +483,7 @@ export default function CreateDatasheet() {
         <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Thermal Conductivity</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.thermalConductivity}</td></tr>
         ${isHDPE ? `<tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Brittleness Temperature</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.brittlenessTemperature}</td></tr>` : ''}
         <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Max Operating Temperature</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.maxOperatingTemp}</td></tr>
-        <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Standards & Regulatory Codes</td><td style="padding:4px 12px; font-size:0.8rem; font-weight:600;">${matProps.standard}</td></tr>
+        <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Standards & Regulatory Codes</td><td style="padding:4px 12px; font-size:0.8rem; font-weight:600;">${p.standard || matProps.standard}</td></tr>
       </table>
       `;
       })()}
@@ -725,7 +725,7 @@ export default function CreateDatasheet() {
             ['Thermal Conductivity', matProps.thermalConductivity],
             ...(isHDPE ? [['Brittleness Temperature', matProps.brittlenessTemperature]] : []),
             ['Max Operating Temperature', matProps.maxOperatingTemp],
-            ['Standards & Regulatory Codes', { text: matProps.standard, bold: true }]
+            ['Standards & Regulatory Codes', { text: p.standard || matProps.standard, bold: true }]
           ];
           return [
             {
