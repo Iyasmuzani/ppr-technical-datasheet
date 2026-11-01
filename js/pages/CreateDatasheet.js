@@ -259,7 +259,7 @@ export default function CreateDatasheet() {
                     <th>DN (mm)</th>
                     <th>OD (mm)</th>
                     <th>Wall Thickness (mm)</th>
-                    <th>Weight (kg/m)</th>
+                    <th>${p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)'}</th>
                     ${p.sizes[0]?.pipeLength ? '<th>Length (m)</th>' : ''}
                   </tr>
                 </thead>
@@ -550,7 +550,7 @@ export default function CreateDatasheet() {
             <th>DN (mm)</th>
             <th>Outer Diameter (mm)</th>
             <th>Wall Thickness (mm)</th>
-            <th>Weight (kg/m)</th>
+            <th>${p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)'}</th>
             ${selectedSizeData[0]?.pipeLength ? '<th>Pipe Length (m)</th>' : ''}
           </tr>
         </thead>
@@ -912,7 +912,7 @@ export default function CreateDatasheet() {
                         { text: 'DN (mm)', style: 'tableHeader' },
                         { text: 'OD (mm)', style: 'tableHeader' },
                         { text: 'Wall Thickness (mm)', style: 'tableHeader' },
-                        { text: 'Weight (kg/m)', style: 'tableHeader' },
+                        { text: p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)', style: 'tableHeader' },
                         ...(selectedSizeData[0]?.pipeLength ? [{ text: 'Length (m)', style: 'tableHeader' }] : [])
                       ],
                       ...selectedSizeData.map(s => [
