@@ -93,8 +93,30 @@ const PVC_MATERIAL_PROPERTIES = {
   vicatSofteningPoint: '≥ 79 °C',
   thermalExpansion: '0.07 mm/m°C',
   thermalConductivity: '0.15 W/m°C',
-  maxOperatingTemp: '60 °C',
-  standard: 'SNI 9324:2024, JIS K 6741 & JIS K 6742'
+  maxOperatingTemp: '45 °C',
+  standard: 'SNI 9324:2024, JIS K 6741 & JIS K 6742',
+  // Pressure & Temperature Derating Curve (Faktor Derating fT vs Temperature Layanan °C)
+  pressureDerating: [
+    { temp: 10, factor: 1.0 },
+    { temp: 15, factor: 1.0 },
+    { temp: 20, factor: 1.0 },
+    { temp: 25, factor: 1.0 },
+    { temp: 30, factor: 0.9 },
+    { temp: 35, factor: 0.8 },
+    { temp: 40, factor: 0.7 },
+    { temp: 45, factor: 0.63 }
+  ],
+  deratingConfig: {
+    xMin: 10,
+    xMax: 60,
+    yMin: 0.3,
+    yMax: 1.2,
+    xTicks: [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
+    yTicks: [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2],
+    xLabel: 'Temperature Layanan (°C)',
+    xLabelPdf: 'Temperature Layanan (C)',
+    yLabel: 'Faktor Derating (fT)'
+  }
 };
 
 // PVC Pipe — Certifications & Compliance
@@ -677,7 +699,7 @@ const PRODUCTS = {
       material: 'uPVC (Unplasticized Polyvinyl Chloride)',
       standard: 'SNI 9324:2024',
       application: 'Pressurized Clean Water Supply & Distribution (up to 10 kgf/cm²)',
-      maxTemp: '60 °C',
+      maxTemp: '45 °C',
       sizeRange: '1/2" - 12" (16 - 300 mm)',
       color: 'White',
       sizes: [
@@ -709,7 +731,7 @@ const PRODUCTS = {
       material: 'uPVC (Unplasticized Polyvinyl Chloride)',
       standard: 'SNI 9324:2024',
       application: 'Non-Pressure Drainage, Wastewater, Sewage & Rainwater Systems',
-      maxTemp: '60 °C',
+      maxTemp: '45 °C',
       sizeRange: '1 1/4" - 12" (32 - 300 mm)',
       color: 'White',
       sizes: [
@@ -738,7 +760,7 @@ const PRODUCTS = {
       material: 'uPVC (Unplasticized Polyvinyl Chloride)',
       standard: 'JIS K 6741 & JIS K 6742',
       application: 'Heavy-Duty Pressurized Clean Water Supply & Industrial Piping (up to 10 kgf/cm²)',
-      maxTemp: '60 °C',
+      maxTemp: '45 °C',
       sizeRange: '1/2" - 12" (16 - 300 mm)',
       color: 'Dark Grey',
       sizes: [
@@ -770,7 +792,7 @@ const PRODUCTS = {
       material: 'uPVC (Unplasticized Polyvinyl Chloride)',
       standard: 'JIS K 6741',
       application: 'Industrial & Commercial Drainage, Wastewater, Sewage & Air Ventilation',
-      maxTemp: '60 °C',
+      maxTemp: '45 °C',
       sizeRange: '1 1/2" - 12" (40 - 300 mm)',
       color: 'Dark Grey',
       sizes: [

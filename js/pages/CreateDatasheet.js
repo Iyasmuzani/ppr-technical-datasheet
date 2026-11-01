@@ -490,17 +490,25 @@ export default function CreateDatasheet() {
 
       ${(() => {
         const isHDPE = p.category === 'hdpe-pipe';
-        const matProps = isHDPE ? PRODUCTS.hdpeMaterialProperties : null;
-        if (!isHDPE || !matProps || !matProps.pressureDerating) return '';
+        const isPVC = p.category === 'pvc-pipe';
+        const matProps = isHDPE
+          ? PRODUCTS.hdpeMaterialProperties
+          : isPVC
+            ? PRODUCTS.pvcMaterialProperties
+            : null;
+        if ((!isHDPE && !isPVC) || !matProps || !matProps.pressureDerating) return '';
         const dr = matProps.pressureDerating;
+        const cfg = matProps.deratingConfig || {};
         const W = 480, H = 260, padL = 60, padR = 30, padT = 30, padB = 50;
         const chartW = W - padL - padR, chartH = H - padT - padB;
-        const xMin = 20, xMax = 40, yMin = 0, yMax = 120;
+        const xMin = cfg.xMin ?? 20, xMax = cfg.xMax ?? 40, yMin = cfg.yMin ?? 0, yMax = cfg.yMax ?? 120;
         const toX = (t) => padL + ((t - xMin) / (xMax - xMin)) * chartW;
         const toY = (f) => padT + chartH - ((f - yMin) / (yMax - yMin)) * chartH;
         const points = dr.map(d => `${toX(d.temp)},${toY(d.factor)}`).join(' ');
-        const yTicks = [0, 20, 40, 60, 80, 100, 120];
-        const xTicks = [20, 25, 30, 35, 40];
+        const yTicks = cfg.yTicks || [0, 20, 40, 60, 80, 100, 120];
+        const xTicks = cfg.xTicks || [20, 25, 30, 35, 40];
+        const xLabel = cfg.xLabel || 'Temperatur Kerja (°C)';
+        const yLabel = cfg.yLabel || '% Rating Faktor Pengali Tekanan';
         return `
       <h3 style="font-size:1rem; color:#1F3E7C; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">Pressure & Temperature Derating Curve</h3>
       <div style="text-align:center; margin-bottom:24px;">
@@ -511,8 +519,8 @@ export default function CreateDatasheet() {
           <defs><linearGradient id="deratingGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#2dd4bf"/><stop offset="100%" stop-color="#14b8a6"/></linearGradient></defs>
           <polyline points="${points}" fill="none" stroke="url(#deratingGrad)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
           ${dr.map(d => `<circle cx="${toX(d.temp)}" cy="${toY(d.factor)}" r="5" fill="#14b8a6" stroke="#fff" stroke-width="2"/><text x="${toX(d.temp)}" y="${toY(d.factor) - 12}" text-anchor="middle" fill="#1F3E7C" font-size="11" font-weight="600">${d.factor}</text>`).join('')}
-          <text x="${padL + chartW / 2}" y="${H - 4}" text-anchor="middle" fill="#555" font-size="11">Temperatur Kerja (°C)</text>
-          <text x="14" y="${padT + chartH / 2}" text-anchor="middle" fill="#555" font-size="9" transform="rotate(-90, 14, ${padT + chartH / 2})">% Rating Faktor Pengali Tekanan</text>
+          <text x="${padL + chartW / 2}" y="${H - 4}" text-anchor="middle" fill="#555" font-size="11">${xLabel}</text>
+          <text x="14" y="${padT + chartH / 2}" text-anchor="middle" fill="#555" font-size="9" transform="rotate(-90, 14, ${padT + chartH / 2})">${yLabel}</text>
         </svg>
       </div>
       `;
@@ -756,21 +764,29 @@ export default function CreateDatasheet() {
           ];
         })(),
 
-        // Pressure & Temperature Derating Curve (HDPE only)
+        // Pressure & Temperature Derating Curve (HDPE & PVC)
         ...(() => {
           if (isSC) return [];
           const isHDPE = p.category === 'hdpe-pipe';
-          const matProps = isHDPE ? PRODUCTS.hdpeMaterialProperties : null;
-          if (!isHDPE || !matProps || !matProps.pressureDerating) return [];
+          const isPVC = p.category === 'pvc-pipe';
+          const matProps = isHDPE
+            ? PRODUCTS.hdpeMaterialProperties
+            : isPVC
+              ? PRODUCTS.pvcMaterialProperties
+              : null;
+          if ((!isHDPE && !isPVC) || !matProps || !matProps.pressureDerating) return [];
           const dr = matProps.pressureDerating;
+          const cfg = matProps.deratingConfig || {};
           const W = 480, H = 260, padL = 60, padR = 30, padT = 30, padB = 50;
           const chartW = W - padL - padR, chartH = H - padT - padB;
-          const xMin = 20, xMax = 40, yMin = 0, yMax = 120;
+          const xMin = cfg.xMin ?? 20, xMax = cfg.xMax ?? 40, yMin = cfg.yMin ?? 0, yMax = cfg.yMax ?? 120;
           const toX = (t) => padL + ((t - xMin) / (xMax - xMin)) * chartW;
           const toY = (f) => padT + chartH - ((f - yMin) / (yMax - yMin)) * chartH;
           const points = dr.map(d => `${toX(d.temp)},${toY(d.factor)}`).join(' ');
-          const yTicks = [0, 20, 40, 60, 80, 100, 120];
-          const xTicks = [20, 25, 30, 35, 40];
+          const yTicks = cfg.yTicks || [0, 20, 40, 60, 80, 100, 120];
+          const xTicks = cfg.xTicks || [20, 25, 30, 35, 40];
+          const xLabel = cfg.xLabelPdf || 'Temperatur Kerja (C)';
+          const yLabel = cfg.yLabel || '% Rating Faktor Pengali Tekanan';
           
           const svgString = `
             <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="font-family:Inter,sans-serif;">
@@ -780,8 +796,8 @@ export default function CreateDatasheet() {
               <defs><linearGradient id="deratingGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#2dd4bf"/><stop offset="100%" stop-color="#14b8a6"/></linearGradient></defs>
               <polyline points="${points}" fill="none" stroke="url(#deratingGrad)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
               ${dr.map(d => `<circle cx="${toX(d.temp)}" cy="${toY(d.factor)}" r="5" fill="#14b8a6" stroke="#fff" stroke-width="2"/><text x="${toX(d.temp)}" y="${toY(d.factor) - 12}" text-anchor="middle" fill="#1F3E7C" font-size="11" font-weight="600">${d.factor}</text>`).join('')}
-              <text x="${padL + chartW / 2}" y="${H - 4}" text-anchor="middle" fill="#555" font-size="11">Temperatur Kerja (C)</text>
-              <text x="14" y="${padT + chartH / 2}" text-anchor="middle" fill="#555" font-size="9" transform="rotate(-90, 14, ${padT + chartH / 2})">% Rating Faktor Pengali Tekanan</text>
+              <text x="${padL + chartW / 2}" y="${H - 4}" text-anchor="middle" fill="#555" font-size="11">${xLabel}</text>
+              <text x="14" y="${padT + chartH / 2}" text-anchor="middle" fill="#555" font-size="9" transform="rotate(-90, 14, ${padT + chartH / 2})">${yLabel}</text>
             </svg>
           `;
 
