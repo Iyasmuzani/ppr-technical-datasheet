@@ -555,11 +555,11 @@ export default function CreateDatasheet() {
       ${(() => {
         const isHDPE = p.category === 'hdpe-pipe';
         const isPVC = p.category === 'pvc-pipe';
-        const certs = isHDPE
+        const certs = p.certifications || (isHDPE
           ? PRODUCTS.hdpeCertifications
           : isPVC
             ? PRODUCTS.pvcCertifications
-            : PRODUCTS.certifications;
+            : PRODUCTS.certifications);
         if (!certs || p.category === 'accessories') return '';
         return `
       <h3 style="font-size:1rem; color:#1F3E7C; margin-top:24px; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">Certifications & Compliance</h3>
@@ -919,11 +919,11 @@ export default function CreateDatasheet() {
           if (isSC || p.category === 'accessories') return [];
           const isHDPE = p.category === 'hdpe-pipe';
           const isPVC = p.category === 'pvc-pipe';
-          const certs = isHDPE
+          const certs = p.certifications || (isHDPE
             ? PRODUCTS.hdpeCertifications
             : isPVC
               ? PRODUCTS.pvcCertifications
-              : PRODUCTS.certifications;
+              : PRODUCTS.certifications);
           if (!certs) return [];
           return [
             {

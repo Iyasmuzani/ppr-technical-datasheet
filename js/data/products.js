@@ -94,7 +94,7 @@ const PVC_MATERIAL_PROPERTIES = {
   thermalExpansion: '0.07 mm/m°C',
   thermalConductivity: '0.15 W/m°C',
   maxOperatingTemp: '45 °C',
-  standard: 'SNI 9324:2024, JIS K 6741 & JIS K 6742',
+  standard: 'SNI 9324:2024',
   // Pressure & Temperature Derating Curve (Faktor Derating fT vs Temperature Layanan °C)
   pressureDerating: [
     { temp: 10, factor: 1.0 },
@@ -119,7 +119,7 @@ const PVC_MATERIAL_PROPERTIES = {
   }
 };
 
-// PVC Pipe — Certifications & Compliance
+// PVC Pipe (Rucika Standard AW & D) — Certifications & Compliance
 const PVC_CERTIFICATIONS = {
   localContent: {
     label: 'Local Content (TKDN)',
@@ -129,7 +129,33 @@ const PVC_CERTIFICATIONS = {
     label: 'Standard Reference',
     value: [
       'Manufactured in accordance with:',
-      '• SNI 9324:2024 (Rucika Standard AW & D)',
+      '• SNI 9324:2024'
+    ].join('\n')
+  },
+  permenkes: {
+    label: 'Drinking Water & Lead-Free Compliance',
+    value: 'Compliant — Calcium-Zinc (Ca-Zn) lead-free stabilizer, safe for drinking water per Permenkes No. 2 Tahun 2023'
+  },
+  greenLabel: {
+    label: 'Green Label Indonesia',
+    value: 'Certified — Environmentally friendly, non-toxic, and 100% recyclable uPVC material'
+  },
+  chemicalResistance: {
+    label: 'Corrosion & Chemical Resistance',
+    value: 'Excellent resistance to corrosion, acids, alkalis, and biological scale build-up'
+  }
+};
+
+// PVC Pipe (Rucika JIS) — Certifications & Compliance
+const PVC_JIS_CERTIFICATIONS = {
+  localContent: {
+    label: 'Local Content (TKDN)',
+    value: 'Certified — High local content (TKDN) compliant'
+  },
+  standardCertificate: {
+    label: 'Standard Reference',
+    value: [
+      'Manufactured in accordance with:',
       '• JIS K 6741 (Unplasticized Poly(Vinyl Chloride) (PVC-U) Pipes)',
       '• JIS K 6742 (Unplasticized Poly(Vinyl Chloride) (PVC-U) Pipes for Water Supply)'
     ].join('\n')
@@ -759,6 +785,7 @@ const PRODUCTS = {
       description: 'Rucika JIS AW/VP is a heavy-duty uPVC pipe manufactured strictly to Japanese Industrial Standards (JIS K 6741 / JIS K 6742) with thicker wall dimensions and higher safety factor for pressurized clean water supply and industrial applications up to 10 kgf/cm² (10 Bar).',
       material: 'uPVC (Unplasticized Polyvinyl Chloride)',
       standard: 'JIS K 6741 & JIS K 6742',
+      certifications: PVC_JIS_CERTIFICATIONS,
       application: 'Heavy-Duty Pressurized Clean Water Supply & Industrial Piping (up to 10 kgf/cm²)',
       maxTemp: '45 °C',
       sizeRange: '1/2" - 12" (16 - 300 mm)',
@@ -791,6 +818,7 @@ const PRODUCTS = {
       description: 'Rucika JIS D/VU is a uPVC pipe manufactured strictly to Japanese Industrial Standards (JIS K 6741) for industrial and commercial non-pressure drainage, wastewater, sewage, and air ventilation systems.',
       material: 'uPVC (Unplasticized Polyvinyl Chloride)',
       standard: 'JIS K 6741',
+      certifications: PVC_JIS_CERTIFICATIONS,
       application: 'Industrial & Commercial Drainage, Wastewater, Sewage & Air Ventilation',
       maxTemp: '45 °C',
       sizeRange: '1 1/2" - 12" (40 - 300 mm)',
