@@ -73,6 +73,7 @@ export default function CreateDatasheet() {
   function renderStepProduct(el) {
     const pipes = PRODUCTS.items.filter(p => p.category === 'ppr-pipe');
     const hdpePipes = PRODUCTS.items.filter(p => p.category === 'hdpe-pipe');
+    const pvcPipes = PRODUCTS.items.filter(p => p.category === 'pvc-pipe');
     const fittings = PRODUCTS.items.filter(p => p.category === 'fitting');
     const acc = PRODUCTS.items.filter(p => p.category === 'accessories');
 
@@ -85,6 +86,10 @@ export default function CreateDatasheet() {
       <h4 style="color: var(--text-secondary); margin-bottom: var(--space-md);">HDPE Pipes</h4>
       <div class="product-grid" style="margin-bottom: var(--space-xl);">
         ${hdpePipes.map(p => productCardHTML(p)).join('')}
+      </div>
+      <h4 style="color: var(--text-secondary); margin-bottom: var(--space-md);">PVC Pipes</h4>
+      <div class="product-grid" style="margin-bottom: var(--space-xl);">
+        ${pvcPipes.map(p => productCardHTML(p)).join('')}
       </div>
       <h4 style="color: var(--text-secondary); margin-bottom: var(--space-md);">Fittings</h4>
       <div class="product-grid" style="margin-bottom: var(--space-xl);">
@@ -120,7 +125,7 @@ export default function CreateDatasheet() {
     return `
       <div class="product-card card--interactive ${selected ? 'selected' : ''}" data-product-id="${p.id}" style="cursor:pointer;">
         <div class="product-card__image">
-          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-card__img">` : `<span style="font-size:3rem;">${p.category === 'hdpe-pipe' ? '⚫' : '🟢'}</span>`}
+          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-card__img">` : `<span style="font-size:3rem;">${p.category === 'hdpe-pipe' ? '⚫' : p.category === 'pvc-pipe' ? '⚪' : '🟢'}</span>`}
           <span class="badge badge--${p.pnClass} product-card__pn-badge">${p.pnRating}</span>
         </div>
         <div class="product-card__body">
@@ -262,10 +267,10 @@ export default function CreateDatasheet() {
                   ${p.sizes.map(s => `
                     <tr>
                       <td><input type="checkbox" class="size-checkbox" value="${s.dn}" ${state.selectedSizes.includes(s.dn) ? 'checked' : ''}></td>
-                      <td><strong>${s.dn}</strong></td>
+                      <td><strong>${s.inch ? `${s.dn} (${s.inch})` : s.dn}</strong></td>
                       <td>${s.od}</td>
                       <td>${s.wallThickness ?? '-'}</td>
-                      <td>${s.weightPerM}</td>
+                      <td>${s.weightPerM ?? '-'}</td>
                       ${s.pipeLength ? `<td>${s.pipeLength}</td>` : ''}
                     </tr>
                   `).join('')}
@@ -455,7 +460,12 @@ export default function CreateDatasheet() {
       <!-- Material Properties -->
       ${(() => {
         const isHDPE = p.category === 'hdpe-pipe';
-        const matProps = isHDPE ? PRODUCTS.hdpeMaterialProperties : PRODUCTS.materialProperties;
+        const isPVC = p.category === 'pvc-pipe';
+        const matProps = isHDPE
+          ? PRODUCTS.hdpeMaterialProperties
+          : isPVC
+            ? PRODUCTS.pvcMaterialProperties
+            : PRODUCTS.materialProperties;
         if (!matProps || p.category === 'accessories') return '';
         return `
       <h3 style="font-size:1rem; color:#1F3E7C; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">Material Properties</h3>
@@ -468,7 +478,7 @@ export default function CreateDatasheet() {
         <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Tensile Strength @ Yield</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.tensileStrength}</td></tr>
         <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Elongation @ Break</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.elongationAtBreak}</td></tr>
         <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Modulus of Elasticity</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.modulusOfElasticity}</td></tr>
-        ${isHDPE ? `<tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Vicat Softening Point</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.vicatSofteningPoint}</td></tr>` : ''}
+        ${matProps.vicatSofteningPoint ? `<tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Vicat Softening Point</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.vicatSofteningPoint}</td></tr>` : ''}
         <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Coeff. of Thermal Expansion</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.thermalExpansion}</td></tr>
         <tr style="background:#f8fafc;"><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Thermal Conductivity</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.thermalConductivity}</td></tr>
         ${isHDPE ? `<tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Brittleness Temperature</td><td style="padding:4px 12px; font-size:0.8rem;">${matProps.brittlenessTemperature}</td></tr>` : ''}
@@ -523,10 +533,10 @@ export default function CreateDatasheet() {
         <tbody>
           ${selectedSizeData.map(s => `
             <tr>
-              <td style="font-weight:600;">${s.dn}</td>
+              <td style="font-weight:600;">${s.inch ? `${s.dn} (${s.inch})` : s.dn}</td>
               <td>${s.od}</td>
               <td>${s.wallThickness ?? '-'}</td>
-              <td>${s.weightPerM}</td>
+              <td>${s.weightPerM ?? '-'}</td>
               ${s.pipeLength ? `<td>${s.pipeLength}</td>` : ''}
             </tr>
           `).join('')}
@@ -536,7 +546,12 @@ export default function CreateDatasheet() {
       <!-- Certifications & Compliance -->
       ${(() => {
         const isHDPE = p.category === 'hdpe-pipe';
-        const certs = isHDPE ? PRODUCTS.hdpeCertifications : PRODUCTS.certifications;
+        const isPVC = p.category === 'pvc-pipe';
+        const certs = isHDPE
+          ? PRODUCTS.hdpeCertifications
+          : isPVC
+            ? PRODUCTS.pvcCertifications
+            : PRODUCTS.certifications;
         if (!certs || p.category === 'accessories') return '';
         return `
       <h3 style="font-size:1rem; color:#1F3E7C; margin-top:24px; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">Certifications & Compliance</h3>
@@ -689,7 +704,12 @@ export default function CreateDatasheet() {
         ...(() => {
           if (isSC) return [];
           const isHDPE = p.category === 'hdpe-pipe';
-          const matProps = isHDPE ? PRODUCTS.hdpeMaterialProperties : PRODUCTS.materialProperties;
+          const isPVC = p.category === 'pvc-pipe';
+          const matProps = isHDPE
+            ? PRODUCTS.hdpeMaterialProperties
+            : isPVC
+              ? PRODUCTS.pvcMaterialProperties
+              : PRODUCTS.materialProperties;
           if (!matProps || p.category === 'accessories') return [];
           const rows = [
             ['Density', matProps.density],
@@ -700,7 +720,7 @@ export default function CreateDatasheet() {
             ['Tensile Strength @ Yield', matProps.tensileStrength],
             ['Elongation @ Break', matProps.elongationAtBreak],
             ['Modulus of Elasticity', matProps.modulusOfElasticity],
-            ...(isHDPE ? [['Vicat Softening Point', matProps.vicatSofteningPoint]] : []),
+            ...(matProps.vicatSofteningPoint ? [['Vicat Softening Point', matProps.vicatSofteningPoint]] : []),
             ['Coeff. of Thermal Expansion', matProps.thermalExpansion],
             ['Thermal Conductivity', matProps.thermalConductivity],
             ...(isHDPE ? [['Brittleness Temperature', matProps.brittlenessTemperature]] : []),
@@ -856,10 +876,10 @@ export default function CreateDatasheet() {
                         ...(selectedSizeData[0]?.pipeLength ? [{ text: 'Length (m)', style: 'tableHeader' }] : [])
                       ],
                       ...selectedSizeData.map(s => [
-                        { text: s.dn.toString(), bold: true },
+                        { text: s.inch ? `${s.dn} (${s.inch})` : s.dn.toString(), bold: true },
                         s.od.toString(),
                         (s.wallThickness ?? '-').toString(),
-                        s.weightPerM.toString(),
+                        (s.weightPerM ?? '-').toString(),
                         ...(s.pipeLength ? [s.pipeLength.toString()] : [])
                       ])
                     ]
@@ -882,7 +902,12 @@ export default function CreateDatasheet() {
         ...(() => {
           if (isSC || p.category === 'accessories') return [];
           const isHDPE = p.category === 'hdpe-pipe';
-          const certs = isHDPE ? PRODUCTS.hdpeCertifications : PRODUCTS.certifications;
+          const isPVC = p.category === 'pvc-pipe';
+          const certs = isHDPE
+            ? PRODUCTS.hdpeCertifications
+            : isPVC
+              ? PRODUCTS.pvcCertifications
+              : PRODUCTS.certifications;
           if (!certs) return [];
           return [
             {

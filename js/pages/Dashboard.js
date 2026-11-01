@@ -1,4 +1,5 @@
 // Rucika TechSheet — Dashboard Page
+import PRODUCTS from '../data/products.js?v=1';
 import Storage from '../utils/storage.js';
 import { formatDate } from '../utils/helpers.js';
 
@@ -6,7 +7,7 @@ export default function Dashboard() {
   const container = document.getElementById('page-content');
   const datasheets = Storage.getDatasheets();
 
-  const totalProducts = 7;
+  const totalProducts = PRODUCTS.items.length;
   const totalDocs = datasheets.length;
   const published = datasheets.filter(d => d.status === 'Published').length;
 

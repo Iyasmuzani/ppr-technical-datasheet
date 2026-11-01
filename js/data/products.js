@@ -84,6 +84,48 @@ const HDPE_CERTIFICATIONS = {
   }
 };
 
+// PVC Pipe — Material Properties (uPVC)
+const PVC_MATERIAL_PROPERTIES = {
+  density: '1.45 g/cm³',
+  tensileStrength: '≥ 45 MPa',
+  elongationAtBreak: '≥ 80%',
+  modulusOfElasticity: '≥ 3000 MPa',
+  vicatSofteningPoint: '≥ 79 °C',
+  thermalExpansion: '0.07 mm/m°C',
+  thermalConductivity: '0.15 W/m°C',
+  maxOperatingTemp: '60 °C',
+  standard: 'JIS K 6741, JIS K 6742 & Rucika Standard'
+};
+
+// PVC Pipe — Certifications & Compliance
+const PVC_CERTIFICATIONS = {
+  localContent: {
+    label: 'Local Content (TKDN)',
+    value: 'Certified — High local content (TKDN) compliant'
+  },
+  standardCertificate: {
+    label: 'Standard Reference',
+    value: [
+      'Manufactured in accordance with:',
+      '• JIS K 6741 (Unplasticized Poly(Vinyl Chloride) (PVC-U) Pipes)',
+      '• JIS K 6742 (Unplasticized Poly(Vinyl Chloride) (PVC-U) Pipes for Water Supply)',
+      '• Rucika Standard'
+    ].join('\n')
+  },
+  permenkes: {
+    label: 'Drinking Water & Lead-Free Compliance',
+    value: 'Compliant — Calcium-Zinc (Ca-Zn) lead-free stabilizer, safe for drinking water per Permenkes No. 2 Tahun 2023'
+  },
+  greenLabel: {
+    label: 'Green Label Indonesia',
+    value: 'Certified — Environmentally friendly, non-toxic, and 100% recyclable uPVC material'
+  },
+  chemicalResistance: {
+    label: 'Corrosion & Chemical Resistance',
+    value: 'Excellent resistance to corrosion, acids, alkalis, and biological scale build-up'
+  }
+};
+
 // RUGlue — Solvent Cement Specifications
 const RUGLUE_SPECIFICATIONS = {
   color: 'Clear',
@@ -131,12 +173,15 @@ const PRODUCTS = {
   certifications: CERTIFICATIONS,
   hdpeMaterialProperties: HDPE_MATERIAL_PROPERTIES,
   hdpeCertifications: HDPE_CERTIFICATIONS,
+  pvcMaterialProperties: PVC_MATERIAL_PROPERTIES,
+  pvcCertifications: PVC_CERTIFICATIONS,
 
   categories: [
     { id: 'ppr-pipe', name: 'PPR Pipes', icon: '🟢', count: 3 },
     { id: 'fitting', name: 'Fittings', icon: '🔧', count: 3 },
     { id: 'accessories', name: 'Accessories', icon: '⚙️', count: 2 },
-    { id: 'hdpe-pipe', name: 'HDPE Pipes', icon: '⚫', count: 6 }
+    { id: 'hdpe-pipe', name: 'HDPE Pipes', icon: '⚫', count: 6 },
+    { id: 'pvc-pipe', name: 'PVC Pipes', icon: '⚪', count: 4 }
   ],
 
   items: [
@@ -614,6 +659,131 @@ const PRODUCTS = {
         { dn: 900, od: 900, wallThickness: 34.4, weightPerM: 96.5948, pipeLength: '6 / 12' },
         { dn: 1000, od: 1000, wallThickness: 38.2, weightPerM: 118.7183, pipeLength: '6 / 12' },
         { dn: 1200, od: 1200, wallThickness: 45.9, weightPerM: null, pipeLength: '6 / 12' }
+      ]
+    },
+
+    // ============================================================
+    //  PVC PIPES — Rucika Standard & Rucika JIS
+    // ============================================================
+
+    // Rucika Standard AW
+    {
+      id: 'pvc-standard-aw',
+      category: 'pvc-pipe',
+      name: 'Rucika Standard AW',
+      pnRating: 'Class AW (10 Bar)',
+      pnClass: 'pn10',
+      description: 'Rucika Standard AW is a uPVC (Unplasticized Polyvinyl Chloride) pressure pipe designed for clean water distribution systems with working pressure up to 10 kgf/cm² (10 Bar). Formulated with Calcium-Zinc (Ca-Zn) lead-free stabilizer.',
+      material: 'uPVC (Unplasticized Polyvinyl Chloride)',
+      standard: 'Rucika Standard / JIS K 6741',
+      application: 'Pressurized Clean Water Supply & Distribution (up to 10 kgf/cm²)',
+      maxTemp: '60 °C',
+      sizeRange: '1/2" - 12" (16 - 300 mm)',
+      color: 'White',
+      sizes: [
+        { dn: 16, inch: '1/2"', od: 22, wallThickness: 1.5, weightPerM: 0.155, pipeLength: 4 },
+        { dn: 20, inch: '3/4"', od: 26, wallThickness: 1.8, weightPerM: 0.216, pipeLength: 4 },
+        { dn: 25, inch: '1"', od: 32, wallThickness: 2.0, weightPerM: 0.294, pipeLength: 4 },
+        { dn: 32, inch: '1 1/4"', od: 42, wallThickness: 2.3, weightPerM: 0.444, pipeLength: 4 },
+        { dn: 40, inch: '1 1/2"', od: 48, wallThickness: 2.3, weightPerM: 0.511, pipeLength: 4 },
+        { dn: 50, inch: '2"', od: 60, wallThickness: 2.3, weightPerM: 0.646, pipeLength: 4 },
+        { dn: 65, inch: '2 1/2"', od: 76, wallThickness: 2.6, weightPerM: 0.936, pipeLength: 4 },
+        { dn: 75, inch: '3"', od: 89, wallThickness: 3.1, weightPerM: 1.288, pipeLength: 4 },
+        { dn: 100, inch: '4"', od: 114, wallThickness: 4.1, weightPerM: 2.165, pipeLength: 4 },
+        { dn: 125, inch: '5"', od: 140, wallThickness: 5.4, weightPerM: 3.466, pipeLength: 4 },
+        { dn: 150, inch: '6"', od: 165, wallThickness: 6.4, weightPerM: 4.830, pipeLength: 4 },
+        { dn: 200, inch: '8"', od: 216, wallThickness: 8.3, weightPerM: 8.187, pipeLength: 4 },
+        { dn: 250, inch: '10"', od: 267, wallThickness: 10.3, weightPerM: 12.534, pipeLength: 4 },
+        { dn: 300, inch: '12"', od: 318, wallThickness: 12.2, weightPerM: 17.672, pipeLength: 4 }
+      ]
+    },
+
+    // Rucika Standard D
+    {
+      id: 'pvc-standard-d',
+      category: 'pvc-pipe',
+      name: 'Rucika Standard D',
+      pnRating: 'Class D (Drainage)',
+      pnClass: 'pn6',
+      description: 'Rucika Standard D is a uPVC (Unplasticized Polyvinyl Chloride) non-pressure pipe designed for domestic wastewater, drainage, rainwater, and sewage gravity flow systems. Formulated with Calcium-Zinc (Ca-Zn) lead-free stabilizer.',
+      material: 'uPVC (Unplasticized Polyvinyl Chloride)',
+      standard: 'Rucika Standard / JIS K 6741',
+      application: 'Non-Pressure Drainage, Wastewater, Sewage & Rainwater Systems',
+      maxTemp: '60 °C',
+      sizeRange: '1 1/4" - 12" (32 - 300 mm)',
+      color: 'White',
+      sizes: [
+        { dn: 32, inch: '1 1/4"', od: 42, wallThickness: 1.3, weightPerM: 0.273, pipeLength: 4 },
+        { dn: 40, inch: '1 1/2"', od: 48, wallThickness: 1.3, weightPerM: 0.313, pipeLength: 4 },
+        { dn: 50, inch: '2"', od: 60, wallThickness: 1.3, weightPerM: 0.394, pipeLength: 4 },
+        { dn: 65, inch: '2 1/2"', od: 76, wallThickness: 1.4, weightPerM: 0.535, pipeLength: 4 },
+        { dn: 75, inch: '3"', od: 89, wallThickness: 1.6, weightPerM: 0.705, pipeLength: 4 },
+        { dn: 100, inch: '4"', od: 114, wallThickness: 2.0, weightPerM: 1.104, pipeLength: 4 },
+        { dn: 125, inch: '5"', od: 140, wallThickness: 2.6, weightPerM: 1.755, pipeLength: 4 },
+        { dn: 150, inch: '6"', od: 165, wallThickness: 3.0, weightPerM: 2.360, pipeLength: 4 },
+        { dn: 200, inch: '8"', od: 216, wallThickness: 4.2, weightPerM: 4.273, pipeLength: 4 },
+        { dn: 250, inch: '10"', od: 267, wallThickness: 5.2, weightPerM: 6.573, pipeLength: 4 },
+        { dn: 300, inch: '12"', od: 318, wallThickness: 6.2, weightPerM: 9.228, pipeLength: 4 }
+      ]
+    },
+
+    // Rucika JIS AW/VP
+    {
+      id: 'pvc-jis-aw-vp',
+      category: 'pvc-pipe',
+      name: 'Rucika JIS AW/VP',
+      pnRating: 'Class VP (10 Bar)',
+      pnClass: 'pn10',
+      description: 'Rucika JIS AW/VP is a heavy-duty uPVC pipe manufactured strictly to Japanese Industrial Standards (JIS K 6741 / JIS K 6742) with thicker wall dimensions and higher safety factor for pressurized clean water supply and industrial applications up to 10 kgf/cm² (10 Bar).',
+      material: 'uPVC (Unplasticized Polyvinyl Chloride)',
+      standard: 'JIS K 6741 & JIS K 6742',
+      application: 'Heavy-Duty Pressurized Clean Water Supply & Industrial Piping (up to 10 kgf/cm²)',
+      maxTemp: '60 °C',
+      sizeRange: '1/2" - 12" (16 - 300 mm)',
+      color: 'Dark Grey',
+      sizes: [
+        { dn: 16, inch: '1/2"', od: 22, wallThickness: 2.7, weightPerM: 0.256, pipeLength: 4 },
+        { dn: 20, inch: '3/4"', od: 26, wallThickness: 2.7, weightPerM: 0.310, pipeLength: 4 },
+        { dn: 25, inch: '1"', od: 32, wallThickness: 3.1, weightPerM: 0.448, pipeLength: 4 },
+        { dn: 32, inch: '1 1/4"', od: 42, wallThickness: 3.1, weightPerM: 0.605, pipeLength: 4 },
+        { dn: 40, inch: '1 1/2"', od: 48, wallThickness: 3.6, weightPerM: 0.790, pipeLength: 4 },
+        { dn: 50, inch: '2"', od: 60, wallThickness: 4.1, weightPerM: 1.122, pipeLength: 4 },
+        { dn: 65, inch: '2 1/2"', od: 76, wallThickness: 4.1, weightPerM: 1.445, pipeLength: 4 },
+        { dn: 75, inch: '3"', od: 89, wallThickness: 5.5, weightPerM: 2.202, pipeLength: 4 },
+        { dn: 100, inch: '4"', od: 114, wallThickness: 6.6, weightPerM: 3.408, pipeLength: 4 },
+        { dn: 125, inch: '5"', od: 140, wallThickness: 7.0, weightPerM: 4.462, pipeLength: 4 },
+        { dn: 150, inch: '6"', od: 165, wallThickness: 8.9, weightPerM: 6.698, pipeLength: 4 },
+        { dn: 200, inch: '8"', od: 216, wallThickness: 10.3, weightPerM: 10.125, pipeLength: 4 },
+        { dn: 250, inch: '10"', od: 267, wallThickness: 12.7, weightPerM: 15.474, pipeLength: 4 },
+        { dn: 300, inch: '12"', od: 318, wallThickness: 15.1, weightPerM: 21.952, pipeLength: 4 }
+      ]
+    },
+
+    // Rucika JIS D/VU
+    {
+      id: 'pvc-jis-d-vu',
+      category: 'pvc-pipe',
+      name: 'Rucika JIS D/VU',
+      pnRating: 'Class VU (Drainage)',
+      pnClass: 'pn6',
+      description: 'Rucika JIS D/VU is a uPVC pipe manufactured strictly to Japanese Industrial Standards (JIS K 6741) for industrial and commercial non-pressure drainage, wastewater, sewage, and air ventilation systems.',
+      material: 'uPVC (Unplasticized Polyvinyl Chloride)',
+      standard: 'JIS K 6741',
+      application: 'Industrial & Commercial Drainage, Wastewater, Sewage & Air Ventilation',
+      maxTemp: '60 °C',
+      sizeRange: '1 1/2" - 12" (40 - 300 mm)',
+      color: 'Dark Grey',
+      sizes: [
+        { dn: 40, inch: '1 1/2"', od: 48, wallThickness: 1.8, weightPerM: 0.413, pipeLength: 4 },
+        { dn: 50, inch: '2"', od: 60, wallThickness: 1.8, weightPerM: 0.521, pipeLength: 4 },
+        { dn: 65, inch: '2 1/2"', od: 76, wallThickness: 2.2, weightPerM: 0.825, pipeLength: 4 },
+        { dn: 75, inch: '3"', od: 89, wallThickness: 2.7, weightPerM: 1.159, pipeLength: 4 },
+        { dn: 100, inch: '4"', od: 114, wallThickness: 3.1, weightPerM: 1.737, pipeLength: 4 },
+        { dn: 125, inch: '5"', od: 140, wallThickness: 4.1, weightPerM: 2.738, pipeLength: 4 },
+        { dn: 150, inch: '6"', od: 165, wallThickness: 5.1, weightPerM: 3.939, pipeLength: 4 },
+        { dn: 200, inch: '8"', od: 216, wallThickness: 6.5, weightPerM: 6.569, pipeLength: 4 },
+        { dn: 250, inch: '10"', od: 267, wallThickness: 7.8, weightPerM: 9.753, pipeLength: 4 },
+        { dn: 300, inch: '12"', od: 318, wallThickness: 9.2, weightPerM: 13.695, pipeLength: 4 }
       ]
     }
   ]
