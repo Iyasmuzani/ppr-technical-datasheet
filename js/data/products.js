@@ -834,6 +834,7 @@ const PRODUCTS = {
       maxTemp: '45 °C',
       sizeRange: '1 1/2" - 12" (40 - 300 mm)',
       color: 'Dark Grey',
+      hideDeratingCurve: true,
       sizes: [
         { dn: 40, inch: '1 1/2"', od: 48, wallThickness: 1.8, weightPerM: 0.413, pipeLength: 4 },
         { dn: 50, inch: '2"', od: 60, wallThickness: 1.8, weightPerM: 0.521, pipeLength: 4 },
