@@ -180,11 +180,12 @@ const PVC_JIS_CERTIFICATIONS = {
 
 // PVC-O Pipe (Rucika Exoplas) — Material Properties
 const PVCO_MATERIAL_PROPERTIES = {
-  specificGravity: '1.43 g/cm³',
-  thermalExpansion: '0.8 × 10⁻⁴ m/m°C',
-  thermalConductivity: '0.15 W/m°C',
-  modulusOfElasticity: '3000 - 4000 N/mm²',
-  surfaceResistance: '10¹² Ohm',
+  density: '1.42 g/cm³',
+  specificGravity: '1.42 g/cm³',
+  thermalExpansion: '0.8 × 10⁻⁴ mm/m.°K',
+  thermalConductivity: '0.138 W/m.°K',
+  modulusOfElasticity: '4200 N/mm²',
+  surfaceResistance: '> 10¹⁶ Ohm/cm',
   maxOperatingTemp: '45 °C',
   standard: 'SNI ISO 16422:2014',
   // Temperature Derating Factor (Figure C.1 — SNI ISO 16422:2014)

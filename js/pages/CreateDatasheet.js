@@ -1,5 +1,5 @@
 // Rucika TechSheet — Create Datasheet Wizard (4-Step)
-import PRODUCTS from '../data/products.js?v=7';
+import PRODUCTS from '../data/products.js?v=9';
 import Storage from '../utils/storage.js';
 import Router from '../router.js';
 import { showToast, formatDate } from '../utils/helpers.js';
@@ -483,7 +483,7 @@ export default function CreateDatasheet() {
             : PRODUCTS.materialProperties);
         if (!matProps || p.category === 'accessories') return '';
         const rows = isPVC ? [
-          ['Specific Gravity', matProps.specificGravity],
+          [matProps.density ? 'Density' : 'Specific Gravity', matProps.density || matProps.specificGravity],
           ['Coefficient of Linear Expansion', matProps.thermalExpansion],
           ['Thermal Conductivity', matProps.thermalConductivity],
           ['Modulus of Elasticity', matProps.modulusOfElasticity],
@@ -761,7 +761,7 @@ export default function CreateDatasheet() {
               : PRODUCTS.materialProperties);
           if (!matProps || p.category === 'accessories') return [];
           const rows = isPVC ? [
-            ['Specific Gravity', matProps.specificGravity],
+            [matProps.density ? 'Density' : 'Specific Gravity', matProps.density || matProps.specificGravity],
             ['Coefficient of Linear Expansion', matProps.thermalExpansion],
             ['Thermal Conductivity', matProps.thermalConductivity],
             ['Modulus of Elasticity', matProps.modulusOfElasticity],
