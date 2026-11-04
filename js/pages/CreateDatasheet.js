@@ -1,5 +1,5 @@
 // Rucika TechSheet — Create Datasheet Wizard (4-Step)
-import PRODUCTS from '../data/products.js?v=2';
+import PRODUCTS from '../data/products.js?v=3';
 import Storage from '../utils/storage.js';
 import Router from '../router.js';
 import { showToast, formatDate } from '../utils/helpers.js';
@@ -74,6 +74,7 @@ export default function CreateDatasheet() {
     const pipes = PRODUCTS.items.filter(p => p.category === 'ppr-pipe');
     const hdpePipes = PRODUCTS.items.filter(p => p.category === 'hdpe-pipe');
     const pvcPipes = PRODUCTS.items.filter(p => p.category === 'pvc-pipe');
+    const pvcoPipes = PRODUCTS.items.filter(p => p.category === 'pvco-pipe');
     const fittings = PRODUCTS.items.filter(p => p.category === 'fitting');
     const acc = PRODUCTS.items.filter(p => p.category === 'accessories');
 
@@ -90,6 +91,10 @@ export default function CreateDatasheet() {
       <h4 style="color: var(--text-secondary); margin-bottom: var(--space-md);">PVC Pipes</h4>
       <div class="product-grid" style="margin-bottom: var(--space-xl);">
         ${pvcPipes.map(p => productCardHTML(p)).join('')}
+      </div>
+      <h4 style="color: var(--text-secondary); margin-bottom: var(--space-md);">PVC-O Pipes</h4>
+      <div class="product-grid" style="margin-bottom: var(--space-xl);">
+        ${pvcoPipes.map(p => productCardHTML(p)).join('')}
       </div>
       <h4 style="color: var(--text-secondary); margin-bottom: var(--space-md);">Fittings</h4>
       <div class="product-grid" style="margin-bottom: var(--space-xl);">
@@ -125,7 +130,7 @@ export default function CreateDatasheet() {
     return `
       <div class="product-card card--interactive ${selected ? 'selected' : ''}" data-product-id="${p.id}" style="cursor:pointer;">
         <div class="product-card__image">
-          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-card__img">` : `<span style="font-size:3rem;">${p.category === 'hdpe-pipe' ? '⚫' : p.category === 'pvc-pipe' ? '⚪' : '🟢'}</span>`}
+          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="product-card__img">` : `<span style="font-size:3rem;">${p.category === 'hdpe-pipe' ? '⚫' : p.category === 'pvc-pipe' ? '⚪' : p.category === 'pvco-pipe' ? '🔵' : '🟢'}</span>`}
           <span class="badge badge--${p.pnClass} product-card__pn-badge">${p.pnRating}</span>
         </div>
         <div class="product-card__body">
@@ -257,8 +262,11 @@ export default function CreateDatasheet() {
                   <tr>
                     <th></th>
                     <th>DN (mm)</th>
+                    ${p.sizes[0]?.sdr ? '<th>SDR</th>' : ''}
                     <th>OD (mm)</th>
                     <th>Wall Thickness (mm)</th>
+                    ${p.sizes[0]?.id ? '<th>ID (mm)</th>' : ''}
+                    ${p.sizes[0]?.weightPerBar ? '<th>Weight / Batang (kg)</th>' : ''}
                     <th>${p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)'}</th>
                     ${p.sizes[0]?.pipeLength ? '<th>Length (m)</th>' : ''}
                   </tr>
@@ -268,8 +276,11 @@ export default function CreateDatasheet() {
                     <tr>
                       <td><input type="checkbox" class="size-checkbox" value="${s.dn}" ${state.selectedSizes.includes(s.dn) ? 'checked' : ''}></td>
                       <td><strong>${s.inch ? `${s.dn} (${s.inch})` : s.dn}</strong></td>
+                      ${s.sdr ? `<td>${s.sdr}</td>` : ''}
                       <td>${s.od}</td>
                       <td>${s.wallThickness ?? '-'}</td>
+                      ${s.id ? `<td>${s.id}</td>` : ''}
+                      ${s.weightPerBar ? `<td>${s.weightPerBar}</td>` : ''}
                       <td>${s.weightPerM ?? '-'}</td>
                       ${s.pipeLength ? `<td>${s.pipeLength}</td>` : ''}
                     </tr>
@@ -460,7 +471,7 @@ export default function CreateDatasheet() {
       <!-- Material Properties -->
       ${(() => {
         const isHDPE = p.category === 'hdpe-pipe';
-        const isPVC = p.category === 'pvc-pipe';
+        const isPVC = p.category === 'pvc-pipe' || p.category === 'pvco-pipe';
         const matProps = p.materialProperties || (isHDPE
           ? PRODUCTS.hdpeMaterialProperties
           : isPVC
@@ -549,8 +560,11 @@ export default function CreateDatasheet() {
         <thead>
           <tr>
             <th>DN (mm)</th>
+            ${selectedSizeData[0]?.sdr ? '<th>SDR</th>' : ''}
             <th>Outer Diameter (mm)</th>
             <th>Wall Thickness (mm)</th>
+            ${selectedSizeData[0]?.id ? '<th>Inner Diameter (mm)</th>' : ''}
+            ${selectedSizeData[0]?.weightPerBar ? '<th>Weight / Batang (kg)</th>' : ''}
             <th>${p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)'}</th>
             ${selectedSizeData[0]?.pipeLength ? '<th>Pipe Length (m)</th>' : ''}
           </tr>
@@ -559,8 +573,11 @@ export default function CreateDatasheet() {
           ${selectedSizeData.map(s => `
             <tr>
               <td style="font-weight:600;">${s.inch ? `${s.dn} (${s.inch})` : s.dn}</td>
+              ${s.sdr ? `<td>${s.sdr}</td>` : ''}
               <td>${s.od}</td>
               <td>${s.wallThickness ?? '-'}</td>
+              ${s.id ? `<td>${s.id}</td>` : ''}
+              ${s.weightPerBar ? `<td style="font-weight:600;">${s.weightPerBar}</td>` : ''}
               <td>${s.weightPerM ?? '-'}</td>
               ${s.pipeLength ? `<td>${s.pipeLength}</td>` : ''}
             </tr>
@@ -571,7 +588,7 @@ export default function CreateDatasheet() {
       <!-- Certifications & Compliance -->
       ${(() => {
         const isHDPE = p.category === 'hdpe-pipe';
-        const isPVC = p.category === 'pvc-pipe';
+        const isPVC = p.category === 'pvc-pipe' || p.category === 'pvco-pipe';
         const certs = p.certifications || (isHDPE
           ? PRODUCTS.hdpeCertifications
           : isPVC
@@ -729,7 +746,7 @@ export default function CreateDatasheet() {
         ...(() => {
           if (isSC) return [];
           const isHDPE = p.category === 'hdpe-pipe';
-          const isPVC = p.category === 'pvc-pipe';
+          const isPVC = p.category === 'pvc-pipe' || p.category === 'pvco-pipe';
           const matProps = p.materialProperties || (isHDPE
             ? PRODUCTS.hdpeMaterialProperties
             : isPVC
@@ -907,19 +924,34 @@ export default function CreateDatasheet() {
                   table: {
                     headerRows: 1,
                     dontBreakRows: true,
-                    widths: ['*', '*', '*', '*', ...(selectedSizeData[0]?.pipeLength ? ['*'] : [])],
+                    widths: [
+                      '*',
+                      ...(selectedSizeData[0]?.sdr ? ['auto'] : []),
+                      '*',
+                      '*',
+                      ...(selectedSizeData[0]?.id ? ['*'] : []),
+                      ...(selectedSizeData[0]?.weightPerBar ? ['*'] : []),
+                      '*',
+                      ...(selectedSizeData[0]?.pipeLength ? ['*'] : [])
+                    ],
                     body: [
                       [
                         { text: 'DN (mm)', style: 'tableHeader' },
+                        ...(selectedSizeData[0]?.sdr ? [{ text: 'SDR', style: 'tableHeader' }] : []),
                         { text: 'OD (mm)', style: 'tableHeader' },
                         { text: 'Wall Thickness (mm)', style: 'tableHeader' },
+                        ...(selectedSizeData[0]?.id ? [{ text: 'ID (mm)', style: 'tableHeader' }] : []),
+                        ...(selectedSizeData[0]?.weightPerBar ? [{ text: 'Weight / Batang (kg)', style: 'tableHeader' }] : []),
                         { text: p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)', style: 'tableHeader' },
                         ...(selectedSizeData[0]?.pipeLength ? [{ text: 'Length (m)', style: 'tableHeader' }] : [])
                       ],
                       ...selectedSizeData.map(s => [
                         { text: s.inch ? `${s.dn} (${s.inch})` : s.dn.toString(), bold: true },
+                        ...(s.sdr ? [s.sdr.toString()] : []),
                         s.od.toString(),
                         (s.wallThickness ?? '-').toString(),
+                        ...(s.id ? [s.id.toString()] : []),
+                        ...(s.weightPerBar ? [{ text: s.weightPerBar.toString(), bold: true }] : []),
                         (s.weightPerM ?? '-').toString(),
                         ...(s.pipeLength ? [s.pipeLength.toString()] : [])
                       ])
@@ -943,7 +975,7 @@ export default function CreateDatasheet() {
         ...(() => {
           if (isSC || p.category === 'accessories') return [];
           const isHDPE = p.category === 'hdpe-pipe';
-          const isPVC = p.category === 'pvc-pipe';
+          const isPVC = p.category === 'pvc-pipe' || p.category === 'pvco-pipe';
           const certs = p.certifications || (isHDPE
             ? PRODUCTS.hdpeCertifications
             : isPVC

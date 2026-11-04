@@ -178,6 +178,45 @@ const PVC_JIS_CERTIFICATIONS = {
   }
 };
 
+// PVC-O Pipe (Rucika Exoplas) — Material Properties
+const PVCO_MATERIAL_PROPERTIES = {
+  specificGravity: '1.43 g/cm³',
+  thermalExpansion: '0.8 × 10⁻⁴ m/m°C',
+  thermalConductivity: '0.15 W/m°C',
+  modulusOfElasticity: '3000 - 4000 N/mm²',
+  surfaceResistance: '10¹² Ohm',
+  maxOperatingTemp: '45 °C',
+  standard: 'ISO 16422 & SNI 9163:2023'
+};
+
+// PVC-O Pipe (Rucika Exoplas) — Certifications & Compliance
+const PVCO_CERTIFICATIONS = {
+  localContent: {
+    label: 'Local Content (TKDN)',
+    value: 'Certified — High local content (TKDN) compliant'
+  },
+  standardCertificate: {
+    label: 'Standard Reference',
+    value: [
+      'Manufactured in accordance with:',
+      '• ISO 16422 (Oriented Unplasticized Poly(Vinyl Chloride) (PVC-O) Pipes)',
+      '• SNI 9163:2023'
+    ].join('\n')
+  },
+  permenkes: {
+    label: 'Drinking Water Compliance',
+    value: 'Compliant — Safe for drinking water distribution per Permenkes No. 2 Tahun 2023'
+  },
+  greenLabel: {
+    label: 'Green Label Indonesia',
+    value: 'Certified — Environmentally friendly, non-toxic, and 100% recyclable PVC-O material'
+  },
+  chemicalResistance: {
+    label: 'Corrosion & Impact Resistance',
+    value: 'Superior resistance to corrosion, water hammer, impact, and crack propagation'
+  }
+};
+
 // RUGlue — Solvent Cement Specifications
 const RUGLUE_SPECIFICATIONS = {
   color: 'Clear',
@@ -229,13 +268,16 @@ const PRODUCTS = {
   pvcJisMaterialProperties: PVC_JIS_MATERIAL_PROPERTIES,
   pvcCertifications: PVC_CERTIFICATIONS,
   pvcJisCertifications: PVC_JIS_CERTIFICATIONS,
+  pvcoMaterialProperties: PVCO_MATERIAL_PROPERTIES,
+  pvcoCertifications: PVCO_CERTIFICATIONS,
 
   categories: [
     { id: 'ppr-pipe', name: 'PPR Pipes', icon: '🟢', count: 3 },
     { id: 'fitting', name: 'Fittings', icon: '🔧', count: 3 },
     { id: 'accessories', name: 'Accessories', icon: '⚙️', count: 2 },
     { id: 'hdpe-pipe', name: 'HDPE Pipes', icon: '⚫', count: 6 },
-    { id: 'pvc-pipe', name: 'PVC Pipes', icon: '⚪', count: 4 }
+    { id: 'pvc-pipe', name: 'PVC Pipes', icon: '⚪', count: 4 },
+    { id: 'pvco-pipe', name: 'PVC-O Pipes', icon: '🔵', count: 1 }
   ],
 
   items: [
@@ -848,6 +890,36 @@ const PRODUCTS = {
         { dn: 216, inch: '8"', od: '215.2 – 216.8', wallThickness: '6.5 – 7.5', weightPerM: '26.131 (24.194 – 28.067)', pipeLength: '4 (4000 – 4010 mm)' },
         { dn: 267, inch: '10"', od: '266.1 – 267.9', wallThickness: '7.8 – 9.0', weightPerM: '38.797 (35.933 – 41.662)', pipeLength: '4 (4000 – 4010 mm)' },
         { dn: 318, inch: '12"', od: '317 – 319', wallThickness: '9.2 – 10.6', weightPerM: '54.477 (50.505 – 58.450)', pipeLength: '4 (4000 – 4010 mm)' }
+      ]
+    },
+
+    // ============================================================
+    //  PVC-O PIPES — Rucika Exoplas
+    // ============================================================
+    {
+      id: 'pvco-pn10',
+      category: 'pvco-pipe',
+      name: 'PVC-O PN10 (Rucika Exoplas)',
+      pnRating: 'PN10 (10 Bar / 1.0 MPa)',
+      pnClass: 'pn10',
+      description: 'Rucika Exoplas is a Biaxially Oriented Unplasticized Polyvinyl Chloride (PVC-O) pressure pipe manufactured through a molecular orientation process, delivering superior impact strength, high hydraulic capacity (larger inner diameter), water hammer resistance, and lighter weight for pressurized clean water networks up to 10 Bar (1.0 MPa).',
+      material: 'PVC-O (Oriented Unplasticized Polyvinyl Chloride)',
+      standard: 'ISO 16422 & SNI 9163:2023',
+      materialProperties: PVCO_MATERIAL_PROPERTIES,
+      certifications: PVCO_CERTIFICATIONS,
+      application: 'Pressurized Clean Water Transmission & Distribution Networks (10 Bar / 1.0 MPa)',
+      maxTemp: '45 °C',
+      sizeRange: '90 - 500 mm',
+      color: 'Blue',
+      sizes: [
+        { dn: 90, sdr: '41', od: 90, wallThickness: 2.8, id: 84.4, weightPerBar: 5.78, weightPerM: 0.96, pipeLength: 6 },
+        { dn: 110, sdr: '45.8', od: 110, wallThickness: 2.4, id: 105.2, weightPerBar: 7.69, weightPerM: 1.28, pipeLength: 6 },
+        { dn: 160, sdr: '45.8', od: 160, wallThickness: 3.5, id: 153.0, weightPerBar: 18.58, weightPerM: 3.10, pipeLength: 6 },
+        { dn: 200, sdr: '45.8', od: 200, wallThickness: 4.4, id: 191.2, weightPerBar: 25.40, weightPerM: 4.23, pipeLength: 6 },
+        { dn: 250, sdr: '45.8', od: 250, wallThickness: 5.5, id: 239.0, weightPerBar: 39.91, weightPerM: 6.65, pipeLength: 6 },
+        { dn: 315, sdr: '45.8', od: 315, wallThickness: 6.9, id: 301.2, weightPerBar: 62.77, weightPerM: 10.46, pipeLength: 6 },
+        { dn: 400, sdr: '45.8', od: 400, wallThickness: 8.8, id: 382.4, weightPerBar: 101.71, weightPerM: 16.95, pipeLength: 6 },
+        { dn: 500, sdr: '45.8', od: 500, wallThickness: 11.0, id: 478.0, weightPerBar: 158.93, weightPerM: 26.49, pipeLength: 6 }
       ]
     }
   ]
