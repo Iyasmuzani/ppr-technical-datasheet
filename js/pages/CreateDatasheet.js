@@ -1,5 +1,5 @@
 // Rucika TechSheet — Create Datasheet Wizard (4-Step)
-import PRODUCTS from '../data/products.js?v=3';
+import PRODUCTS from '../data/products.js?v=7';
 import Storage from '../utils/storage.js';
 import Router from '../router.js';
 import { showToast, formatDate } from '../utils/helpers.js';
@@ -201,6 +201,7 @@ export default function CreateDatasheet() {
                 <div><span style="color:var(--text-muted);">Standard:</span><br><strong>${p.standard}</strong></div>
                 ${!isSC ? `<div><span style="color:var(--text-muted);">Application:</span><br><strong>${p.application}</strong></div>` : ''}
                 ${!isSC ? `<div><span style="color:var(--text-muted);">PN Rating:</span><br><strong><span class="badge badge--${p.pnClass}">${p.pnRating}</span></strong></div>` : ''}
+                ${p.designCoefficient ? `<div><span style="color:var(--text-muted);">Design Coefficient:</span><br><strong>${p.designCoefficient}</strong></div>` : ''}
               </div>
             </div>
           </div>
@@ -262,6 +263,7 @@ export default function CreateDatasheet() {
                   <tr>
                     <th></th>
                     <th>DN (mm)</th>
+                    ${p.sizes[0]?.materialClass ? '<th>Material Class</th>' : ''}
                     ${p.sizes[0]?.sdr ? '<th>SDR</th>' : ''}
                     <th>OD (mm)</th>
                     <th>Wall Thickness (mm)</th>
@@ -276,6 +278,7 @@ export default function CreateDatasheet() {
                     <tr>
                       <td><input type="checkbox" class="size-checkbox" value="${s.dn}" ${state.selectedSizes.includes(s.dn) ? 'checked' : ''}></td>
                       <td><strong>${s.inch ? `${s.dn} (${s.inch})` : s.dn}</strong></td>
+                      ${s.materialClass ? `<td>${s.materialClass}</td>` : ''}
                       ${s.sdr ? `<td>${s.sdr}</td>` : ''}
                       <td>${s.od}</td>
                       <td>${s.wallThickness ?? '-'}</td>
@@ -465,6 +468,7 @@ export default function CreateDatasheet() {
         <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Standard</td><td style="padding:4px 12px; font-size:0.8rem;">${p.standard}</td></tr>
         <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Application</td><td style="padding:4px 12px; font-size:0.8rem;">${p.application}</td></tr>
         <tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Pressure Rating</td><td style="padding:4px 12px; font-size:0.8rem; font-weight:600;">${p.pnRating}</td></tr>
+        ${p.designCoefficient ? `<tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Design Coefficient</td><td style="padding:4px 12px; font-size:0.8rem; font-weight:600;">${p.designCoefficient}</td></tr>` : ''}
         ${p.maxTemp ? `<tr><td style="padding:4px 12px; font-size:0.8rem; color:#666;">Max Temperature</td><td style="padding:4px 12px; font-size:0.8rem;">${p.maxTemp}</td></tr>` : ''}
       </table>
 
@@ -518,12 +522,12 @@ export default function CreateDatasheet() {
       ${(() => {
         if (p.hideDeratingCurve) return '';
         const isHDPE = p.category === 'hdpe-pipe';
-        const isPVC = p.category === 'pvc-pipe';
-        const matProps = isHDPE
+        const isPVC = p.category === 'pvc-pipe' || p.category === 'pvco-pipe';
+        const matProps = p.materialProperties || (isHDPE
           ? PRODUCTS.hdpeMaterialProperties
           : isPVC
             ? PRODUCTS.pvcMaterialProperties
-            : null;
+            : null);
         if ((!isHDPE && !isPVC) || !matProps || !matProps.pressureDerating) return '';
         const dr = matProps.pressureDerating;
         const cfg = matProps.deratingConfig || {};
@@ -560,6 +564,7 @@ export default function CreateDatasheet() {
         <thead>
           <tr>
             <th>DN (mm)</th>
+            ${selectedSizeData[0]?.materialClass ? '<th>Material Class</th>' : ''}
             ${selectedSizeData[0]?.sdr ? '<th>SDR</th>' : ''}
             <th>Outer Diameter (mm)</th>
             <th>Wall Thickness (mm)</th>
@@ -573,6 +578,7 @@ export default function CreateDatasheet() {
           ${selectedSizeData.map(s => `
             <tr>
               <td style="font-weight:600;">${s.inch ? `${s.dn} (${s.inch})` : s.dn}</td>
+              ${s.materialClass ? `<td>${s.materialClass}</td>` : ''}
               ${s.sdr ? `<td>${s.sdr}</td>` : ''}
               <td>${s.od}</td>
               <td>${s.wallThickness ?? '-'}</td>
@@ -731,6 +737,7 @@ export default function CreateDatasheet() {
                     ['Standard', p.standard],
                     ['Application', p.application],
                     ['Pressure Rating', p.pnRating],
+                    ...(p.designCoefficient ? [['Design Coefficient', p.designCoefficient]] : []),
                     ...(p.maxTemp ? [['Max Temperature', p.maxTemp]] : [])
                   ]
                 },
@@ -806,16 +813,16 @@ export default function CreateDatasheet() {
           ];
         })(),
 
-        // Pressure & Temperature Derating Curve (HDPE & PVC)
+        // Pressure & Temperature Derating Curve (HDPE, PVC & PVC-O)
         ...(() => {
           if (isSC || p.hideDeratingCurve) return [];
           const isHDPE = p.category === 'hdpe-pipe';
-          const isPVC = p.category === 'pvc-pipe';
-          const matProps = isHDPE
+          const isPVC = p.category === 'pvc-pipe' || p.category === 'pvco-pipe';
+          const matProps = p.materialProperties || (isHDPE
             ? PRODUCTS.hdpeMaterialProperties
             : isPVC
               ? PRODUCTS.pvcMaterialProperties
-              : null;
+              : null);
           if ((!isHDPE && !isPVC) || !matProps || !matProps.pressureDerating) return [];
           const dr = matProps.pressureDerating;
           const cfg = matProps.deratingConfig || {};
@@ -926,6 +933,7 @@ export default function CreateDatasheet() {
                     dontBreakRows: true,
                     widths: [
                       '*',
+                      ...(selectedSizeData[0]?.materialClass ? ['auto'] : []),
                       ...(selectedSizeData[0]?.sdr ? ['auto'] : []),
                       '*',
                       '*',
@@ -937,6 +945,7 @@ export default function CreateDatasheet() {
                     body: [
                       [
                         { text: 'DN (mm)', style: 'tableHeader' },
+                        ...(selectedSizeData[0]?.materialClass ? [{ text: 'Mat. Class', style: 'tableHeader' }] : []),
                         ...(selectedSizeData[0]?.sdr ? [{ text: 'SDR', style: 'tableHeader' }] : []),
                         { text: 'OD (mm)', style: 'tableHeader' },
                         { text: 'Wall Thickness (mm)', style: 'tableHeader' },
@@ -947,6 +956,7 @@ export default function CreateDatasheet() {
                       ],
                       ...selectedSizeData.map(s => [
                         { text: s.inch ? `${s.dn} (${s.inch})` : s.dn.toString(), bold: true },
+                        ...(s.materialClass ? [s.materialClass.toString()] : []),
                         ...(s.sdr ? [s.sdr.toString()] : []),
                         s.od.toString(),
                         (s.wallThickness ?? '-').toString(),
