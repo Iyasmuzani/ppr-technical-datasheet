@@ -2,9 +2,9 @@
 import Router from './router.js';
 import Auth from './utils/auth.js';
 import LoginScreen from './components/LoginScreen.js';
-import Dashboard from './pages/Dashboard.js';
-import ProductSelection from './pages/ProductSelection.js';
-import CreateDatasheet from './pages/CreateDatasheet.js';
+import Dashboard from './pages/Dashboard.js?v=8';
+import ProductSelection from './pages/ProductSelection.js?v=8';
+import CreateDatasheet from './pages/CreateDatasheet.js?v=8';
 import History from './pages/History.js';
 import Settings from './pages/Settings.js';
 

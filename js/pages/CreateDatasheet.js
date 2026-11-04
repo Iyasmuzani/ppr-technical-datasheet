@@ -152,9 +152,9 @@ export default function CreateDatasheet() {
     const isSC = isSolventCement(p);
 
     el.innerHTML = `
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl);">
+      <div class="config-grid" style="display: grid; grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); gap: var(--space-xl); align-items: start;">
         <!-- Left: Form -->
-        <div>
+        <div style="min-width: 0;">
           <div class="card">
             <div class="card__header"><h4 class="card__title">Project Information</h4></div>
             <div class="card__body">
@@ -183,7 +183,7 @@ export default function CreateDatasheet() {
         </div>
 
         <!-- Right: Specs -->
-        <div>
+        <div style="min-width: 0;">
           <div class="card" style="margin-bottom: var(--space-lg);">
             <div class="card__header"><h4 class="card__title">Product: ${p.name}</h4></div>
             <div class="card__body">
@@ -257,16 +257,16 @@ export default function CreateDatasheet() {
                 Select All
               </label>
             </div>
-            <div class="card__body" style="padding:0;">
-              <table class="data-table">
+            <div class="card__body" style="padding:0; overflow-x:auto;">
+              <table class="data-table data-table--compact">
                 <thead>
                   <tr>
                     <th></th>
                     <th>DN (mm)</th>
-                    ${p.sizes[0]?.materialClass ? '<th>Material Class</th>' : ''}
+                    ${p.sizes[0]?.materialClass ? '<th>Mat. Class</th>' : ''}
                     ${p.sizes[0]?.sdr ? '<th>SDR</th>' : ''}
                     <th>OD (mm)</th>
-                    <th>Wall Thickness (mm)</th>
+                    <th>Wall (mm)</th>
                     ${p.sizes[0]?.id ? '<th>ID (mm)</th>' : ''}
                     ${p.sizes[0]?.weightPerBar ? '<th>Weight / Batang (kg)</th>' : ''}
                     <th>${p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)'}</th>
