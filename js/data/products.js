@@ -212,6 +212,28 @@ const PVCO_MATERIAL_PROPERTIES = {
   }
 };
 
+// PVC-O Pipe (Rucika Exoplas) — Standard Penulisan (Pipe Marking)
+const PVCO_MARKING_STANDARD = {
+  example: 'RUCIKA  EXOPLAS PVC-O  450  Ø 160 x 3,5  PN 10  SNI ISO 16422:2014  C=2,0  W2118212  23:03  LSPr-004-IDN  [SNI]',
+  items: [
+    { label: 'Logo Rucika', description: 'Logo merek RUCIKA' },
+    { label: 'Nama Produk Pipa', description: 'EXOPLAS PVC-O' },
+    { label: 'Material Class', description: 'Kelas material pipa (mis. 315 atau 450)' },
+    { label: 'Dimensi Pipa', description: 'Berdasarkan OD pipa — Ø OD x Tebal Dinding (mm)' },
+    { label: 'Kelas Tekanan', description: 'Kelas tekanan nominal (mis. PN 10 atau PN 12,5)' },
+    { label: 'Standard SNI ISO', description: 'SNI ISO 16422:2014' },
+    { label: 'C Factor', description: 'Design Coefficient (mis. C=2,0 atau C=1,6)' },
+    { label: 'Area Produksi', description: 'Kode area produksi pipa di Cibitung' },
+    { label: 'No Line (2 digit)', description: 'Nomor line produksi' },
+    { label: 'Tahun (2 digit)', description: 'Tahun produksi' },
+    { label: 'Hari dalam Tahun (3 digit)', description: 'Hari ke-1 s/d 356' },
+    { label: 'Jam Aktual Produksi', description: 'Jam produksi aktual (HH:MM)' },
+    { label: 'Kode Lembaga Standarisasi SNI', description: 'Kode lembaga sertifikasi (LSPr-004-IDN)' },
+    { label: 'Logo SNI', description: 'Logo Standar Nasional Indonesia' }
+  ],
+  note: 'Pipa PVC-O EXOPLAS: Pipa berwarna putih, tulisan hitam dengan strip EXOPLAS berwarna biru di atasnya.'
+};
+
 // PVC-O Pipe (Rucika Exoplas) — Certifications & Compliance
 const PVCO_CERTIFICATIONS = {
   localContent: {
@@ -932,6 +954,7 @@ const PRODUCTS = {
       standard: 'SNI ISO 16422:2014',
       materialProperties: PVCO_MATERIAL_PROPERTIES,
       certifications: PVCO_CERTIFICATIONS,
+      markingStandard: PVCO_MARKING_STANDARD,
       application: 'Pressurized Clean Water Transmission & Distribution Networks (10 Bar / 1.0 MPa, Design Coefficient C = 2.0)',
       maxTemp: '45 °C',
       sizeRange: '90 - 500 mm',
@@ -961,6 +984,7 @@ const PRODUCTS = {
       standard: 'SNI ISO 16422:2014',
       materialProperties: PVCO_MATERIAL_PROPERTIES,
       certifications: PVCO_CERTIFICATIONS,
+      markingStandard: PVCO_MARKING_STANDARD,
       application: 'Pressurized Clean Water Transmission & Distribution Networks (12.5 Bar / 1.25 MPa, Design Coefficient C = 1.6)',
       maxTemp: '45 °C',
       sizeRange: '90 - 500 mm',

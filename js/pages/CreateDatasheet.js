@@ -1,5 +1,5 @@
 // Rucika TechSheet — Create Datasheet Wizard (4-Step)
-import PRODUCTS from '../data/products.js?v=9';
+import PRODUCTS from '../data/products.js?v=10';
 import Storage from '../utils/storage.js';
 import Router from '../router.js';
 import { showToast, formatDate } from '../utils/helpers.js';
@@ -613,6 +613,37 @@ export default function CreateDatasheet() {
       </table>
       `;
       })()}
+
+      <!-- Pipe Marking Standard (Standard Penulisan) -->
+      ${(() => {
+        if (!p.markingStandard) return '';
+        const ms = p.markingStandard;
+        return `
+      <h3 style="font-size:1rem; color:#1F3E7C; margin-top:24px; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">Standard Penulisan (Pipe Marking)</h3>
+      <div style="background:#f0f4fa; border:1px solid #d0d8e8; border-radius:8px; padding:12px 16px; margin-bottom:16px; font-family:monospace; font-size:0.85rem; color:#1F3E7C; word-break:break-all; line-height:1.6;">
+        ${ms.example}
+      </div>
+      <table style="width:100%; margin-bottom:12px; border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th style="background:#1F3E7C; color:#fff; padding:6px 12px; font-size:0.75rem; text-align:left; width:40px;">No</th>
+            <th style="background:#1F3E7C; color:#fff; padding:6px 12px; font-size:0.75rem; text-align:left; width:200px;">Komponen</th>
+            <th style="background:#1F3E7C; color:#fff; padding:6px 12px; font-size:0.75rem; text-align:left;">Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${ms.items.map((item, i) => `
+            <tr${i % 2 === 1 ? ' style="background:#f8fafc;"' : ''}>
+              <td style="padding:5px 12px; font-size:0.8rem; color:#666;">${i + 1}</td>
+              <td style="padding:5px 12px; font-size:0.8rem; font-weight:600;">${item.label}</td>
+              <td style="padding:5px 12px; font-size:0.8rem;">${item.description}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+      ${ms.note ? `<p style="font-size:0.78rem; color:#555; font-style:italic; margin-bottom:24px;">📌 ${ms.note}</p>` : ''}
+      `;
+      })()}
     `;
   }
 
@@ -1016,6 +1047,64 @@ export default function CreateDatasheet() {
                   },
                   margin: [0, 0, 0, 20]
                 }
+              ]
+            }
+          ];
+        })(),
+
+        // Pipe Marking Standard (Standard Penulisan)
+        ...(() => {
+          if (!p.markingStandard) return [];
+          const ms = p.markingStandard;
+          return [
+            {
+              unbreakable: true,
+              stack: [
+                { text: 'Standard Penulisan (Pipe Marking)', style: 'sectionTitle', margin: [0, 0, 0, 10] },
+                {
+                  table: {
+                    widths: ['*'],
+                    body: [
+                      [{ text: ms.example, font: 'Courier', fontSize: 8, color: '#1F3E7C', margin: [4, 6, 4, 6] }]
+                    ]
+                  },
+                  layout: {
+                    hLineWidth: () => 0.5,
+                    vLineWidth: () => 0.5,
+                    hLineColor: () => '#d0d8e8',
+                    vLineColor: () => '#d0d8e8',
+                    fillColor: () => '#f0f4fa'
+                  },
+                  margin: [0, 0, 0, 10]
+                },
+                {
+                  table: {
+                    headerRows: 1,
+                    dontBreakRows: true,
+                    widths: [25, 130, '*'],
+                    body: [
+                      [
+                        { text: 'No', style: 'tableHeader', alignment: 'center' },
+                        { text: 'Komponen', style: 'tableHeader' },
+                        { text: 'Keterangan', style: 'tableHeader' }
+                      ],
+                      ...ms.items.map((item, i) => [
+                        { text: (i + 1).toString(), alignment: 'center' },
+                        { text: item.label, bold: true },
+                        item.description
+                      ])
+                    ]
+                  },
+                  layout: {
+                    hLineWidth: () => 0.5,
+                    vLineWidth: () => 0.5,
+                    hLineColor: () => '#e2e8f0',
+                    vLineColor: () => '#e2e8f0',
+                    fillColor: (row) => row === 0 ? '#1F3E7C' : (row % 2 === 0 ? '#f8fafc' : null)
+                  },
+                  margin: [0, 0, 0, 8]
+                },
+                ...(ms.note ? [{ text: ms.note, fontSize: 8, italics: true, color: '#555', margin: [0, 0, 0, 20] }] : [])
               ]
             }
           ];
