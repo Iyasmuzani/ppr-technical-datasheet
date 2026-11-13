@@ -253,6 +253,16 @@
   white-space: nowrap;
 }
 
+.table-center th,
+.table-center td {
+  text-align: center !important;
+}
+
+.pdf-preview table.table-center th,
+.pdf-preview table.table-center td {
+  text-align: center !important;
+}
+
 @media (max-width: 1100px) {
   .config-grid {
     grid-template-columns: 1fr !important;

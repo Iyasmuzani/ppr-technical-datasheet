@@ -1,5 +1,5 @@
 // Rucika TechSheet — Dashboard Page
-import PRODUCTS from '../data/products.js?v=10';
+import PRODUCTS from '../data/products.js?v=11';
 import Storage from '../utils/storage.js';
 import { formatDate } from '../utils/helpers.js';
 

@@ -1,5 +1,5 @@
 // Rucika TechSheet — Create Datasheet Wizard (4-Step)
-import PRODUCTS from '../data/products.js?v=10';
+import PRODUCTS from '../data/products.js?v=11';
 import Storage from '../utils/storage.js';
 import Router from '../router.js';
 import { showToast, formatDate } from '../utils/helpers.js';
@@ -258,34 +258,34 @@ export default function CreateDatasheet() {
               </label>
             </div>
             <div class="card__body" style="padding:0; overflow-x:auto;">
-              <table class="data-table data-table--compact">
+              <table class="data-table data-table--compact table-center">
                 <thead>
                   <tr>
-                    <th></th>
-                    <th>DN (mm)</th>
-                    ${p.sizes[0]?.materialClass ? '<th>Mat. Class</th>' : ''}
-                    ${p.sizes[0]?.sdr ? '<th>SDR</th>' : ''}
-                    <th>OD (mm)</th>
-                    <th>Wall (mm)</th>
-                    ${p.sizes[0]?.id ? '<th>ID (mm)</th>' : ''}
-                    ${p.sizes[0]?.weightPerBar ? '<th>Weight / Batang (kg)</th>' : ''}
-                    <th>${p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)'}</th>
-                    ${p.sizes[0]?.pipeLength ? '<th>Length (m)</th>' : ''}
+                    <th style="text-align:center;"></th>
+                    <th style="text-align:center;">DN (mm)</th>
+                    ${p.sizes[0]?.materialClass ? '<th style="text-align:center;">Mat. Class</th>' : ''}
+                    ${p.sizes[0]?.sdr ? '<th style="text-align:center;">SDR</th>' : ''}
+                    <th style="text-align:center;">OD (mm)</th>
+                    <th style="text-align:center;">Wall (mm)</th>
+                    ${p.sizes[0]?.id ? '<th style="text-align:center;">ID (mm)</th>' : ''}
+                    ${p.sizes[0]?.weightPerBar ? '<th style="text-align:center;">Weight / Batang (kg)</th>' : ''}
+                    <th style="text-align:center;">${p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)'}</th>
+                    ${p.sizes[0]?.pipeLength ? '<th style="text-align:center;">Length (m)</th>' : ''}
                   </tr>
                 </thead>
                 <tbody>
                   ${p.sizes.map(s => `
                     <tr>
-                      <td><input type="checkbox" class="size-checkbox" value="${s.dn}" ${state.selectedSizes.includes(s.dn) ? 'checked' : ''}></td>
-                      <td><strong>${s.inch ? `${s.dn} (${s.inch})` : s.dn}</strong></td>
-                      ${s.materialClass ? `<td>${s.materialClass}</td>` : ''}
-                      ${s.sdr ? `<td>${s.sdr}</td>` : ''}
-                      <td>${s.od}</td>
-                      <td>${s.wallThickness ?? '-'}</td>
-                      ${s.id ? `<td>${s.id}</td>` : ''}
-                      ${s.weightPerBar ? `<td>${s.weightPerBar}</td>` : ''}
-                      <td>${s.weightPerM ?? '-'}</td>
-                      ${s.pipeLength ? `<td>${s.pipeLength}</td>` : ''}
+                      <td style="text-align:center;"><input type="checkbox" class="size-checkbox" value="${s.dn}" ${state.selectedSizes.includes(s.dn) ? 'checked' : ''}></td>
+                      <td style="text-align:center;"><strong>${s.inch ? `${s.dn} (${s.inch})` : s.dn}</strong></td>
+                      ${s.materialClass ? `<td style="text-align:center;">${s.materialClass}</td>` : ''}
+                      ${s.sdr ? `<td style="text-align:center;">${s.sdr}</td>` : ''}
+                      <td style="text-align:center;">${s.od}</td>
+                      <td style="text-align:center;">${s.wallThickness ?? '-'}</td>
+                      ${s.id ? `<td style="text-align:center;">${s.id}</td>` : ''}
+                      ${s.weightPerBar ? `<td style="text-align:center;">${s.weightPerBar}</td>` : ''}
+                      <td style="text-align:center;">${s.weightPerM ?? '-'}</td>
+                      ${s.pipeLength ? `<td style="text-align:center;">${s.pipeLength}</td>` : ''}
                     </tr>
                   `).join('')}
                 </tbody>
@@ -457,6 +457,72 @@ export default function CreateDatasheet() {
     `;
   }
 
+  function getMarkingStandardSVG(p) {
+    const isPN10 = !p || p.id === 'pvco-pn10';
+    const pnText = isPN10 ? 'PN 10' : 'PN 12,5';
+    const cFactor = isPN10 ? 'C=2,0' : 'C=1,6';
+
+    const tokens = [
+      { text: 'RUCIKA', isLogo: true, x1: 14, x2: 72, midX: 43, label: 'Logo Rucika', labelY: 92, labelEnd: 85 },
+      { text: 'EXOPLAS', x1: 80, x2: 142, midX: 111, label: 'Nama produk pipa', labelY: 116, labelEnd: 125 },
+      { text: '450', isMat: true, x1: 185, x2: 212, midX: 198, label: 'Material Class', labelY: 140, labelEnd: 105 },
+      { text: 'Ø 160 x 3,5', x1: 220, x2: 295, midX: 258, label: 'Dimensi pipa berdasarkan OD pipa', labelY: 164, labelEnd: 215 },
+      { text: pnText, x1: 302, x2: 348, midX: 325, label: 'Kelas Tekanan', labelY: 188, labelEnd: 105 },
+      { text: 'SNI ISO 16422:2014', x1: 355, x2: 475, midX: 415, label: 'Standard SNI ISO yang digunakan', labelY: 212, labelEnd: 215 },
+      { text: cFactor, x1: 482, x2: 520, midX: 501, label: 'C Factor', labelY: 236, labelEnd: 75 },
+      { text: 'W', x1: 526, x2: 536, midX: 531, label: 'Area produksi pipa di Cibitung', labelY: 260, labelEnd: 195 },
+      { text: '21', x1: 538, x2: 550, midX: 544, label: 'No Line (2 digit)', labelY: 284, labelEnd: 120 },
+      { text: '18', x1: 552, x2: 564, midX: 558, label: 'Tahun (2 digit)', labelY: 308, labelEnd: 110 },
+      { text: '212', x1: 566, x2: 588, midX: 577, label: 'Hari dalam tahun ( 3 digit ) Hari 1 - 356', labelY: 332, labelEnd: 255 },
+      { text: '23:03', x1: 595, x2: 630, midX: 612, label: 'Jam Aktual Produksi', labelY: 356, labelEnd: 140 },
+      { text: 'LSPr-004-IDN', x1: 636, x2: 704, midX: 670, label: 'Kode Lembaga Standarisasi SNI', labelY: 380, labelEnd: 195 },
+      { text: 'SNI', isBox: true, x1: 710, x2: 732, midX: 721, label: 'Logo SNI', labelY: 404, labelEnd: 85 }
+    ];
+
+    return `
+      <svg width="740" height="495" viewBox="0 0 740 495" style="font-family:Inter,Arial,sans-serif; background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; max-width:100%; display:block; margin:0 auto 16px;">
+        <text x="370" y="22" text-anchor="middle" font-size="13" font-weight="bold" fill="#1F3E7C">Standard Penulisan</text>
+        
+        <!-- Marking Elements Row -->
+        <rect x="14" y="34" width="58" height="18" rx="9" fill="#1F3E7C"/>
+        <text x="43" y="47" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#ffffff">RUCIKA</text>
+        <text x="111" y="47" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#0f172a">EXOPLAS</text>
+        <text x="162" y="47" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f172a">PVC-O</text>
+        <text x="198" y="47" text-anchor="middle" font-size="10" font-weight="bold" fill="#1F3E7C">450</text>
+        <text x="258" y="47" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f172a">Ø 160 x 3,5</text>
+        <text x="325" y="47" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f172a">${pnText}</text>
+        <text x="415" y="47" text-anchor="middle" font-size="9" font-weight="bold" fill="#0f172a">SNI ISO 16422:2014</text>
+        <text x="501" y="47" text-anchor="middle" font-size="10" font-weight="bold" fill="#0f172a">${cFactor}</text>
+        <text x="557" y="47" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#0f172a">W2118212</text>
+        <text x="612" y="47" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#0f172a">23:03</text>
+        <text x="670" y="47" text-anchor="middle" font-size="8.5" font-weight="bold" fill="#0f172a">LSPr-004-IDN</text>
+        <rect x="710" y="34" width="22" height="18" fill="none" stroke="#0f172a" stroke-width="1.2"/>
+        <text x="721" y="47" text-anchor="middle" font-size="8" font-weight="bold" fill="#0f172a">SNI</text>
+
+        <!-- Token Underlines & Leader Lines with Arrows -->
+        ${tokens.map(t => `
+          <line x1="${t.x1}" y1="56" x2="${t.x2}" y2="56" stroke="#1F3E7C" stroke-width="1.5"/>
+          <line x1="${t.midX}" y1="58" x2="${t.midX}" y2="${t.labelY}" stroke="#64748b" stroke-width="1.1"/>
+          <line x1="${t.labelEnd + 10}" y1="${t.labelY}" x2="${t.midX}" y2="${t.labelY}" stroke="#64748b" stroke-width="1.1"/>
+          <polygon points="${t.midX - 3},63 ${t.midX + 3},63 ${t.midX},57" fill="#1F3E7C"/>
+          <polygon points="${t.labelEnd + 8},${t.labelY - 3} ${t.labelEnd + 8},${t.labelY + 3} ${t.labelEnd + 1},${t.labelY}" fill="#1F3E7C"/>
+          <text x="14" y="${t.labelY + 4}" font-size="9" fill="#1e293b" font-weight="500">${t.label}</text>
+        `).join('')}
+
+        <!-- Pipe Visual Simulation at Bottom -->
+        <g transform="translate(140, 422)">
+          <rect x="0" y="0" width="460" height="38" rx="4" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2"/>
+          <rect x="0" y="0" width="460" height="13" rx="2" fill="#bae6fd"/>
+          <text x="12" y="10" font-size="8" font-weight="bold" fill="#0284c7" letter-spacing="2">EXOPLAS   EXOPLAS   EXOPLAS   EXOPLAS   EXOPLAS   EXOPLAS</text>
+          <rect x="12" y="19" width="38" height="12" rx="6" fill="#1F3E7C"/>
+          <text x="31" y="28" text-anchor="middle" font-size="6.5" font-weight="bold" fill="#ffffff">RUCIKA</text>
+          <text x="56" y="28" font-size="7.5" font-family="monospace" font-weight="bold" fill="#0f172a">EXOPLAS PVC-O 315 Ø 90 X 2,2 PN10 ISO 16422 C=1,6 W2118227 00:47</text>
+        </g>
+        <text x="370" y="475" text-anchor="middle" font-size="8" font-style="italic" fill="#64748b">Pipa PVC-O EXOPLAS : Pipa berwarna putih, tulisan hitam dengan strip EXOPLAS berwarna biru di atasnya.</text>
+      </svg>
+    `;
+  }
+
   function renderPipePreview(p, selectedSizeData) {
     return `
       <!-- Product Info -->
@@ -560,32 +626,32 @@ export default function CreateDatasheet() {
 
       <!-- Spec Table -->
       <h3 style="font-size:1rem; color:#1F3E7C; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">Dimensional Specifications</h3>
-      <table>
+      <table class="table-center">
         <thead>
           <tr>
-            <th>DN (mm)</th>
-            ${selectedSizeData[0]?.materialClass ? '<th>Material Class</th>' : ''}
-            ${selectedSizeData[0]?.sdr ? '<th>SDR</th>' : ''}
-            <th>Outer Diameter (mm)</th>
-            <th>Wall Thickness (mm)</th>
-            ${selectedSizeData[0]?.id ? '<th>Inner Diameter (mm)</th>' : ''}
-            ${selectedSizeData[0]?.weightPerBar ? '<th>Weight / Batang (kg)</th>' : ''}
-            <th>${p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)'}</th>
-            ${selectedSizeData[0]?.pipeLength ? '<th>Pipe Length (m)</th>' : ''}
+            <th style="text-align:center;">DN (mm)</th>
+            ${selectedSizeData[0]?.materialClass ? '<th style="text-align:center;">Material Class</th>' : ''}
+            ${selectedSizeData[0]?.sdr ? '<th style="text-align:center;">SDR</th>' : ''}
+            <th style="text-align:center;">Outer Diameter (mm)</th>
+            <th style="text-align:center;">Wall Thickness (mm)</th>
+            ${selectedSizeData[0]?.id ? '<th style="text-align:center;">Inner Diameter (mm)</th>' : ''}
+            ${selectedSizeData[0]?.weightPerBar ? '<th style="text-align:center;">Weight / Batang (kg)</th>' : ''}
+            <th style="text-align:center;">${p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)'}</th>
+            ${selectedSizeData[0]?.pipeLength ? '<th style="text-align:center;">Pipe Length (m)</th>' : ''}
           </tr>
         </thead>
         <tbody>
           ${selectedSizeData.map(s => `
             <tr>
-              <td style="font-weight:600;">${s.inch ? `${s.dn} (${s.inch})` : s.dn}</td>
-              ${s.materialClass ? `<td>${s.materialClass}</td>` : ''}
-              ${s.sdr ? `<td>${s.sdr}</td>` : ''}
-              <td>${s.od}</td>
-              <td>${s.wallThickness ?? '-'}</td>
-              ${s.id ? `<td>${s.id}</td>` : ''}
-              ${s.weightPerBar ? `<td style="font-weight:600;">${s.weightPerBar}</td>` : ''}
-              <td>${s.weightPerM ?? '-'}</td>
-              ${s.pipeLength ? `<td>${s.pipeLength}</td>` : ''}
+              <td style="text-align:center; font-weight:600;">${s.inch ? `${s.dn} (${s.inch})` : s.dn}</td>
+              ${s.materialClass ? `<td style="text-align:center;">${s.materialClass}</td>` : ''}
+              ${s.sdr ? `<td style="text-align:center;">${s.sdr}</td>` : ''}
+              <td style="text-align:center;">${s.od}</td>
+              <td style="text-align:center;">${s.wallThickness ?? '-'}</td>
+              ${s.id ? `<td style="text-align:center;">${s.id}</td>` : ''}
+              ${s.weightPerBar ? `<td style="text-align:center; font-weight:600;">${s.weightPerBar}</td>` : ''}
+              <td style="text-align:center;">${s.weightPerM ?? '-'}</td>
+              ${s.pipeLength ? `<td style="text-align:center;">${s.pipeLength}</td>` : ''}
             </tr>
           `).join('')}
         </tbody>
@@ -620,8 +686,8 @@ export default function CreateDatasheet() {
         const ms = p.markingStandard;
         return `
       <h3 style="font-size:1rem; color:#1F3E7C; margin-top:24px; margin-bottom:12px; border-bottom:1px solid #e2e8f0; padding-bottom:8px;">Standard Penulisan (Pipe Marking)</h3>
-      <div style="background:#f0f4fa; border:1px solid #d0d8e8; border-radius:8px; padding:12px 16px; margin-bottom:16px; font-family:monospace; font-size:0.85rem; color:#1F3E7C; word-break:break-all; line-height:1.6;">
-        ${ms.example}
+      <div style="overflow-x:auto; margin-bottom:16px;">
+        ${getMarkingStandardSVG(p)}
       </div>
       <table style="width:100%; margin-bottom:12px; border-collapse:collapse;">
         <thead>
@@ -975,26 +1041,26 @@ export default function CreateDatasheet() {
                     ],
                     body: [
                       [
-                        { text: 'DN (mm)', style: 'tableHeader' },
-                        ...(selectedSizeData[0]?.materialClass ? [{ text: 'Mat. Class', style: 'tableHeader' }] : []),
-                        ...(selectedSizeData[0]?.sdr ? [{ text: 'SDR', style: 'tableHeader' }] : []),
-                        { text: 'OD (mm)', style: 'tableHeader' },
-                        { text: 'Wall Thickness (mm)', style: 'tableHeader' },
-                        ...(selectedSizeData[0]?.id ? [{ text: 'ID (mm)', style: 'tableHeader' }] : []),
-                        ...(selectedSizeData[0]?.weightPerBar ? [{ text: 'Weight / Batang (kg)', style: 'tableHeader' }] : []),
-                        { text: p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)', style: 'tableHeader' },
-                        ...(selectedSizeData[0]?.pipeLength ? [{ text: 'Length (m)', style: 'tableHeader' }] : [])
+                        { text: 'DN (mm)', style: 'tableHeader', alignment: 'center' },
+                        ...(selectedSizeData[0]?.materialClass ? [{ text: 'Mat. Class', style: 'tableHeader', alignment: 'center' }] : []),
+                        ...(selectedSizeData[0]?.sdr ? [{ text: 'SDR', style: 'tableHeader', alignment: 'center' }] : []),
+                        { text: 'OD (mm)', style: 'tableHeader', alignment: 'center' },
+                        { text: 'Wall Thickness (mm)', style: 'tableHeader', alignment: 'center' },
+                        ...(selectedSizeData[0]?.id ? [{ text: 'ID (mm)', style: 'tableHeader', alignment: 'center' }] : []),
+                        ...(selectedSizeData[0]?.weightPerBar ? [{ text: 'Weight / Batang (kg)', style: 'tableHeader', alignment: 'center' }] : []),
+                        { text: p.weightUnit ? `Weight (${p.weightUnit})` : 'Weight (kg/m)', style: 'tableHeader', alignment: 'center' },
+                        ...(selectedSizeData[0]?.pipeLength ? [{ text: 'Length (m)', style: 'tableHeader', alignment: 'center' }] : [])
                       ],
                       ...selectedSizeData.map(s => [
-                        { text: s.inch ? `${s.dn} (${s.inch})` : s.dn.toString(), bold: true },
-                        ...(s.materialClass ? [s.materialClass.toString()] : []),
-                        ...(s.sdr ? [s.sdr.toString()] : []),
-                        s.od.toString(),
-                        (s.wallThickness ?? '-').toString(),
-                        ...(s.id ? [s.id.toString()] : []),
-                        ...(s.weightPerBar ? [{ text: s.weightPerBar.toString(), bold: true }] : []),
-                        (s.weightPerM ?? '-').toString(),
-                        ...(s.pipeLength ? [s.pipeLength.toString()] : [])
+                        { text: s.inch ? `${s.dn} (${s.inch})` : s.dn.toString(), bold: true, alignment: 'center' },
+                        ...(s.materialClass ? [{ text: s.materialClass.toString(), alignment: 'center' }] : []),
+                        ...(s.sdr ? [{ text: s.sdr.toString(), alignment: 'center' }] : []),
+                        { text: s.od.toString(), alignment: 'center' },
+                        { text: (s.wallThickness ?? '-').toString(), alignment: 'center' },
+                        ...(s.id ? [{ text: s.id.toString(), alignment: 'center' }] : []),
+                        ...(s.weightPerBar ? [{ text: s.weightPerBar.toString(), bold: true, alignment: 'center' }] : []),
+                        { text: (s.weightPerM ?? '-').toString(), alignment: 'center' },
+                        ...(s.pipeLength ? [{ text: s.pipeLength.toString(), alignment: 'center' }] : [])
                       ])
                     ]
                   },
@@ -1061,22 +1127,7 @@ export default function CreateDatasheet() {
               unbreakable: true,
               stack: [
                 { text: 'Standard Penulisan (Pipe Marking)', style: 'sectionTitle', margin: [0, 0, 0, 10] },
-                {
-                  table: {
-                    widths: ['*'],
-                    body: [
-                      [{ text: ms.example, font: 'Courier', fontSize: 8, color: '#1F3E7C', margin: [4, 6, 4, 6] }]
-                    ]
-                  },
-                  layout: {
-                    hLineWidth: () => 0.5,
-                    vLineWidth: () => 0.5,
-                    hLineColor: () => '#d0d8e8',
-                    vLineColor: () => '#d0d8e8',
-                    fillColor: () => '#f0f4fa'
-                  },
-                  margin: [0, 0, 0, 10]
-                },
+                { svg: getMarkingStandardSVG(p), width: 515, alignment: 'center', margin: [0, 0, 0, 12] },
                 {
                   table: {
                     headerRows: 1,
