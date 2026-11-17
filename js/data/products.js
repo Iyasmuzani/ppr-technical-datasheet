@@ -144,10 +144,7 @@ const PVC_CERTIFICATIONS = {
     label: 'Green Label Indonesia',
     value: 'Certified — Environmentally friendly, non-toxic, and 100% recyclable uPVC material'
   },
-  chemicalResistance: {
-    label: 'Corrosion & Chemical Resistance',
-    value: 'Excellent resistance to corrosion, acids, alkalis, and biological scale build-up'
-  }
+
 };
 
 // PVC Pipe (Rucika JIS) — Certifications & Compliance
@@ -172,10 +169,7 @@ const PVC_JIS_CERTIFICATIONS = {
     label: 'Green Label Indonesia',
     value: 'Certified — Environmentally friendly, non-toxic, and 100% recyclable uPVC material'
   },
-  chemicalResistance: {
-    label: 'Corrosion & Chemical Resistance',
-    value: 'Excellent resistance to corrosion, acids, alkalis, and biological scale build-up'
-  }
+
 };
 
 // PVC-O Pipe (Rucika Exoplas) — Material Properties
